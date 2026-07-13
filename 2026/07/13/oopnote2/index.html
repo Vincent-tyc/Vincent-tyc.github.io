@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-  <meta name="robots" content="noindex,follow">
+  
   <meta name="generator" content="Hexo 8.1.1">
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   
@@ -17,24 +17,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>Tags - Hexo</title>
+  <title>oop笔记（2） - Hexo</title>
 
   
-    <meta name="description" content="this is a bullshit">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Tags">
-<meta property="og:url" content="http://example.com/tags/">
+    <meta name="description" content="开始讲类了…不知道笔记能写多久呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oop笔记（2）">
+<meta property="og:url" content="http://example.com/2026/07/13/oopnote2/">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="this is a bullshit">
+<meta property="og:description" content="开始讲类了…不知道笔记能写多久呢？">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/images/touxiang.jpg">
+<meta property="article:published_time" content="2026-07-13T03:08:30.000Z">
+<meta property="article:modified_time" content="2026-07-13T07:59:53.060Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="编程">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/touxiang.jpg">
   
   
   
-  
+  <meta name="keywords" content="编程">
 
   <!-- feed -->
   
@@ -47,12 +50,12 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"http://example.com","author":{"@type":"Person","name":"John Doe","sameAs":[],"image":"/images/touxiang.jpg"},"name":"Hexo","description":"this is a bullshit","url":"http://example.com"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"John Doe","sameAs":[],"image":"/images/touxiang.jpg"},"dateCreated":"2026-07-13T11:08:30+08:00","dateModified":"2026-07-13T15:59:53+08:00","datePublished":"2026-07-13T11:08:30+08:00","description":"","headline":"oop笔记（2）","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2026/07/13/oopnote2/"},"publisher":{"@type":"Organization","name":"John Doe","sameAs":[],"image":"/images/touxiang.jpg","logo":{"@type":"ImageObject","url":"/images/touxiang.jpg"}},"url":"http://example.com/2026/07/13/oopnote2/","keywords":"编程","image":[]}</script>
   
 </head>
 <body>
 
-<div class="l_body index" id="start" layout="tags" type="undefined" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
 
 
 <header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/touxiang.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Vincent</div></a></div></header>
@@ -64,46 +67,130 @@
 <div class="widgets">
 <div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
 
+
+
 <widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2026/07/13/oopnote2/"><span class="title">oop笔记（2）</span></a><a class="item title" href="/2026/07/13/wendangshiyong/"><span class="title">如何美化你的笔记</span></a><a class="item title" href="/2026/07/12/oopnote/"><span class="title">从零(?)开始学oop</span></a><a class="item title" href="/2026/07/05/2026-summer/"><span class="title">2026 summer</span></a><a class="item title" href="/2026/07/05/%E6%88%91%E8%A6%81%E5%AD%A6markdown/"><span class="title">markdown到底怎么用？</span></a><a class="item title" href="/2026/05/27/%E8%87%AA%E7%84%B6%E5%9C%B0%E7%90%86%E5%AD%A6/"><span class="title">自然地理学</span></a><a class="item title" href="/2026/07/05/markdown-jiao-cheng/"><span class="title">Markdown 基本用法教程</span></a><a class="item title" href="/2026/06/03/Kaiwai%20Wong/"><span class="title">王家卫电影经典台词</span></a><a class="item title" href="/2025/11/04/hello-world/"><span class="title">何意味</span></a></div></widget>
 </div>
 
 </div></aside><div class="l_main" id="main">
 
-<header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/touxiang.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Vincent</div></a></div></header>
 
 
-  
-  
-  
 
-<div class="navbar top"><div class="navbar-blur"><div class="navbar-container"><nav class="post"><a href="/">Recent</a><a href="/categories/">Categories</a><a class="active" href="/tags/">Tags</a><a href="/archives/">Archives</a></nav></div></div></div>
-  <div class='post-list'>
-    <article class='' id='tags'>
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2026-07-13T03:08:30.000Z">2026-07-13</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2026-07-13T07:59:53.060Z">2026-07-13</time></span></div></div></div>
+    
+    <div class="bottom only-title">
       
-        <a class='tag' href="/tags/%E7%BC%96%E7%A8%8B/">
-          <span class='name'>编程</span>
-        </a>
-      
-        <a class='tag' href="/tags/markdown/">
-          <span class='name'>markdown</span>
-        </a>
-      
-        <a class='tag' href="/tags/%E5%86%99%E4%BD%9C/">
-          <span class='name'>写作</span>
-        </a>
-      
-        <a class='tag' href="/tags/%E6%95%99%E7%A8%8B/">
-          <span class='name'>教程</span>
-        </a>
-      
-    </article>
+      <div class="text-area">
+        <h1 class="text title"><span>oop笔记（2）</span></h1>
+        
+      </div>
+    </div>
+    
   </div>
+  </div><article class="md-text content"><!-- 文章正文从下面开始写 -->
+
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a><strong>类</strong></h2><h3 id="声明与定义"><a href="#声明与定义" class="headerlink" title="声明与定义"></a>声明与定义</h3><blockquote>
+<p>extern int i;<br>extern int i;<br>int f(int);<br>int f(int x);<br> 这些都是声明</p>
+</blockquote>
+<h3 id="类的成员"><a href="#类的成员" class="headerlink" title="类的成员"></a>类的成员</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ClassName</span> &#123;</span><br><span class="line">    <span class="comment">// 1. 访问说明符</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 2. 成员声明</span></span><br><span class="line">    <span class="type">int</span> x;              <span class="comment">// 成员变量</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">foo</span><span class="params">()</span></span>;         <span class="comment">// 成员函数</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> y;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">bar</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>类内的成员参数可以在类内直接给出定义，也可以在类外定义</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">foo</span><span class="params">(<span class="type">int</span> v)</span> </span>&#123; x += v; &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">bar</span><span class="params">(<span class="type">int</span> v)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Foo::bar</span><span class="params">(<span class="type">int</span> v)</span> </span>&#123; x += v; &#125; <span class="comment">//注意 ::的用处</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Foo f;</span><br><span class="line">    f.<span class="built_in">bar</span>(<span class="number">1</span>);  <span class="comment">// Error: &#x27;bar&#x27; is a private member of &#x27;Foo&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<div class="tag-plugin colorful note" color="green"><div class="title">`using`的用法</div><div class="body"><p><code>using arraylist = struct arraylist_ *</code> 代替tyedef</p></div></div>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">    <span class="comment">// 公有别名</span></span><br><span class="line">    <span class="keyword">using</span> elem = <span class="type">int</span>;</span><br><span class="line">    elem x;     <span class="comment">// x 是 int 类型</span></span><br><span class="line">    <span class="function">elem <span class="title">add</span><span class="params">(elem v)</span> </span>&#123; x += v; <span class="keyword">return</span> x; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// 私有别名</span></span><br><span class="line">    <span class="keyword">using</span> type = <span class="type">char</span>;</span><br><span class="line">    type c;     <span class="comment">// c 是 char 类型，类内可用</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在这段实例代码中，<strong>类型别名作为类成员，仍然受访问权限控制</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// elem y;      // 错误：elem 不是全局名字，必须加作用域</span></span><br><span class="line">Foo::elem z;    <span class="comment">// 正确：elem 是 public 的</span></span><br><span class="line"><span class="comment">// Foo::type c; // 错误：type 是 private 的，外部不可访问</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="this-指针-Java"><a href="#this-指针-Java" class="headerlink" title="this 指针(Java?)"></a><code>this</code> 指针<del>(Java?)</del></h4><p>在成员函数的函数体中，访问<emp>任何成员</emp> 时都会被自动添加 <code>this-&gt;</code>，例如 <code>void Foo::bar(int v) &#123; x += v; &#125;</code> 中的 <code>x += v</code>; 实际是 <code>this-&gt;x += v</code>;<br><del>教程在讲汇编，这个我不会啊</del></p>
+<div class="tag-plugin colorful note" color="green"><div class="title">注意</div><div class="body"><p>成员函数不能重新声明<code>redeclared</code></p></div></div>
+
+<h4 id="inline-函数"><a href="#inline-函数" class="headerlink" title="inline 函数"></a>inline 函数</h4><p>封装有性能代价吗？</p>
+<p>C++通过<strong>内联函数</strong><code>incline</code>做到“封装不牺牲性能”，C++会在调用点把函数体 <strong>展开</strong> ，消除函数调用本身</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">foo</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">add5</span>(x);  <span class="comment">// 调用 add5，有调用开销</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">foo</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">5</span>;    <span class="comment">// 直接计算，没有函数调用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="什么样的函数会被内联？"><a href="#什么样的函数会被内联？" class="headerlink" title="什么样的函数会被内联？"></a>什么样的函数会被内联？</h5><h5 id="内联的代价是什么？"><a href="#内联的代价是什么？" class="headerlink" title="内联的代价是什么？"></a>内联的代价是什么？</h5><h5 id="getter-和-setter"><a href="#getter-和-setter" class="headerlink" title="getter 和 setter"></a><strong>getter 和 setter</strong></h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> age;  <span class="comment">// 私有，外部无法直接访问</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// Getter：获取 age 的值</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Setter：设置 age 的值，可以加入验证逻辑</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">setAge</span><span class="params">(<span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (v &gt;= <span class="number">0</span>) &#123;      <span class="comment">// 验证：年龄不能为负</span></span><br><span class="line">            age = v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Getter：通常命名为 getXxx()，返回对应类型</li>
+<li>Setter：通常命名为 setXxx(参数)，返回 void 或返回自身引用（用于链式调用）</li>
+</ul>
+<h4 id="构造函数constructor"><a href="#构造函数constructor" class="headerlink" title="构造函数constructor"></a>构造函数<code>constructor</code></h4><p>构造函数用于初始化该类的对象，对于：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Container</span> &#123;</span><br><span class="line">    elem* val;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Container</span>() &#123;</span><br><span class="line">        val = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>Container c = Container();</code>就可以构造一个对象。</p>
+<ul>
+<li>构造函数的两个特征<ul>
+<li>和类同名</li>
+<li>没有返回值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> id;</span><br><span class="line">    std::string name;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 这就是构造函数</span></span><br><span class="line">    <span class="built_in">Student</span>(<span class="type">int</span> i, std::string n) &#123;</span><br><span class="line">        id = i;</span><br><span class="line">        name = n;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Student <span class="title">s</span><span class="params">(<span class="number">42</span>, <span class="string">&quot;Alice&quot;</span>)</span></span>;  <span class="comment">// 创建对象时自动调用构造函数</span></span><br></pre></td></tr></table></figure>
+
+<p>构造函数可以加参数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Container</span> &#123;</span><br><span class="line">    elem* val;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Container</span>(<span class="type">unsigned</span> size) &#123;</span><br><span class="line">        val = (elem*)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(elem) *size);</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br><span class="line">Container c2 = <span class="built_in">Container</span>(<span class="number">64</span>); <span class="comment">//这样来构造</span></span><br></pre></td></tr></table></figure>
+
+<div class="tag-plugin colorful note" color="green"><div class="title">与</div><div class="body"><p><code>self.init()</code>的异同？ 都是在对象创建时自动调用、负责初始化，然而<strong>构造函数没有返回值</strong>(<code>python</code>返回<code>None</code>),且C++允许<strong>重载多个构造函数</strong></p></div></div>
+
+<blockquote>
+<p>构造函数的意义是给该类的每一个对象提供一定的“保证”，而C++通过确保给每个对象执行构造函数来提供这一保证。</p>
+</blockquote>
+<h4 id=""><a href="#" class="headerlink" title=""></a><u>写这个我又想起来了我看cs61A一点笔记都不写，现在全忘光了，这不好</u></h4><h4 id="动态内存分配"><a href="#动态内存分配" class="headerlink" title="动态内存分配"></a>动态内存分配</h4><p>似乎这里有一个<code>new</code>和<code>delete</code>，不知道是什么</p>
+<h5 id="malloc的问题"><a href="#malloc的问题" class="headerlink" title="malloc的问题"></a><code>malloc</code>的问题</h5><blockquote>
+<p>Container *p &#x3D; (Container *)malloc(sizeof(Container));</p>
+</blockquote>
+<blur>只分配内存，没有真正创建对象。</blur>
+
+<h5 id="new-delete之用处"><a href="#new-delete之用处" class="headerlink" title="new delete之用处"></a><code>new delete</code>之用处</h5><p><code>new</code>申请内存，同时调用构造函数，并返回一个指针。而<code>delete</code>调用析构函数，并释放内存。</p>
+<div class="tag-plugin colorful note" color="green"><div class="title">注意</div><div class="body"><p>单个对象和数组的不同，<code>new</code>有<code>new</code>和<code>new[]</code>两种，<code>delete</code>同理</p></div></div>
+
+<h4 id="函数默认参数与函数重载"><a href="#函数默认参数与函数重载" class="headerlink" title="函数默认参数与函数重载"></a>函数默认参数与函数重载</h4><h5 id="默认参数default-arguments"><a href="#默认参数default-arguments" class="headerlink" title="默认参数default arguments"></a>默认参数<code>default arguments</code></h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">point</span><span class="params">(<span class="type">int</span> x = <span class="number">3</span>, <span class="type">int</span> y = <span class="number">4</span>)</span></span>; <span class="comment">// 这就是默认参数</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">point</span>(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// calls point(1, 2)</span></span><br><span class="line"><span class="built_in">point</span>(<span class="number">1</span>);    <span class="comment">// calls point(1, 4)</span></span><br><span class="line"><span class="built_in">point</span>();     <span class="comment">// calls point(3, 4)</span></span><br></pre></td></tr></table></figure>
+
+<p>默认参数允许函数省略<strong>末尾若干参数</strong>的调用。不能放前面。</p>
+<p><em>这个默认参数好像python里面也讲到了啊</em></p>
+<h6 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h6><ul>
+<li>默认参数可以在同一作用域的重复声明中追加</li>
+<li>内部作用域不能获取外部作用域的默认参数</li>
+<li>带默认参数的<strong>友元函数</strong>声明必须是定义</li>
+<li>默认参数不能用局部变量（除非不求值）</li>
+<li><code>operator()</code> 以外，运算符重载不能有默认参数（啥意思？）</li>
+</ul>
+<p>这里大概比较难理解，第一点算容易想到，第二点也无甚可补充，第三点什么是友元尚不知，第四点 意思是像<code>n</code>这样的局部变量不能放进默认参数里，除非是<code>sizeof(n)</code>这样的不求值的。</p>
+<h5 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h5><h3 id="补充：-的理解"><a href="#补充：-的理解" class="headerlink" title="补充：::的理解"></a>补充：<code>::</code>的理解</h3><h3 id="什么是"><a href="#什么是" class="headerlink" title="什么是 "></a>什么是 <emp>友元？</emp></h3></article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Newer</div><a href="/2026/07/13/wendangshiyong/">如何美化你的笔记</a></div><div class="item" id="next"><div class="note">Older</div><a href="/2026/07/12/oopnote/">从零(?)开始学oop</a></div></section></div>
+
+
+
+
 
 
 <footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">John Doe</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
-</aside><div class='float-panel'>
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-text">类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E4%B8%8E%E5%AE%9A%E4%B9%89"><span class="toc-text">声明与定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98"><span class="toc-text">类的成员</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#this-%E6%8C%87%E9%92%88-Java"><span class="toc-text">this 指针(Java?)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#inline-%E5%87%BD%E6%95%B0"><span class="toc-text">inline 函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E5%87%BD%E6%95%B0%E4%BC%9A%E8%A2%AB%E5%86%85%E8%81%94%EF%BC%9F"><span class="toc-text">什么样的函数会被内联？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E8%81%94%E7%9A%84%E4%BB%A3%E4%BB%B7%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">内联的代价是什么？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#getter-%E5%92%8C-setter"><span class="toc-text">getter 和 setter</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0constructor"><span class="toc-text">构造函数constructor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text">写这个我又想起来了我看cs61A一点笔记都不写，现在全忘光了，这不好</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-text">动态内存分配</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#malloc%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">malloc的问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#new-delete%E4%B9%8B%E7%94%A8%E5%A4%84"><span class="toc-text">new delete之用处</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0%E4%B8%8E%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD"><span class="toc-text">函数默认参数与函数重载</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0default-arguments"><span class="toc-text">默认参数default arguments</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%A1%A5%E5%85%85"><span class="toc-text">补充</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD"><span class="toc-text">函数重载</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9A-%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-text">补充：::的理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF"><span class="toc-text">什么是 友元？</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a></div></widget>
+</div></aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
   </button>
