@@ -1,4 +1,4 @@
-utils.jq(() => {
+(function () {
   const els = Array.from(document.getElementsByClassName('ds-memos'));
 
   els.forEach(el => {
@@ -18,7 +18,7 @@ utils.jq(() => {
       const hide = el.getAttribute('hide')?.split(",") || [];
 
       await Promise.all(memos.data.slice(0, limit || memos.data.length).map(item =>
-          createMemoCell(item, memos, users, hide, default_avatar, host).then(cell => $(el).append(cell))
+          createMemoCell(item, memos, users, hide, default_avatar, host).then(cell => utils.dom(el).append(cell))
       ));
     });
 
@@ -48,7 +48,8 @@ utils.jq(() => {
           let user = memos.users.find(user => user.id === parseInt(creatorId));
           if (!user) {
             if (!memos.requests[creatorId]) {
-              memos.requests[creatorId] = fetch(`${memos.site}/api/v1/users/${creatorId}`)
+              // 走统一请求入口，用户详情同样纳入本地缓存（service: memos-user）
+              memos.requests[creatorId] = utils.requestWithoutLoading(`${memos.site}/api/v1/users/${creatorId}`, { service: 'memos-user' })
                   .then(response => response.json())
                   .then(data => {
                     if (data.username) {
@@ -57,6 +58,10 @@ utils.jq(() => {
                     } else {
                       user = null;
                     }
+                  })
+                  .catch(() => {
+                    // 用户详情失败时回退默认昵称/头像，不阻塞 memo 渲染
+                    user = null;
                   })
                   .finally(() => delete memos.requests[creatorId]);
             }
@@ -72,6 +77,41 @@ utils.jq(() => {
             `<p><img src="${res.externalLink || `https://${host}/o/r/${res.id}`}"></p>`
         )
       },
+      "25+": {
+        buildUser: async (item, memos, default_avatar) => {
+          const creatorId = item?.creator.split('/')[1];
+          let user = memos.users.find(user => user.name.split('/')[1] === creatorId);
+          if (!user) {
+            if (!memos.requests[creatorId]) {
+              // 走统一请求入口，用户详情同样纳入本地缓存（service: memos-user）
+              memos.requests[creatorId] = utils.requestWithoutLoading(`${memos.site}/api/v1/users/${creatorId}`, { service: 'memos-user' })
+                  .then(response => response.json())
+                  .then(data => {
+                    if (data.username) {
+                      user = data;
+                      memos.users.push(data);
+                    } else {
+                      user = null;
+                    }
+                  })
+                  .catch(() => {
+                    // 用户详情失败时回退默认昵称/头像，不阻塞 memo 渲染
+                    user = null;
+                  })
+                  .finally(() => delete memos.requests[creatorId]);
+            }
+            await memos.requests[creatorId];
+            user = memos.users.find(user => user.name.split('/')[1] === creatorId);
+          }
+          const name = user ? user.displayName || user.username : 'memos';
+          const avatarUrl = user?.avatarUrl ? `${memos.site}${user.avatarUrl}` : default_avatar || '';
+          return `<div class="user-info">${avatarUrl ? `<img src="${avatarUrl}">` : ''}<span>${name}</span></div>`;
+        },
+        buildDate: item => new Date(item.createTime),
+        buildImages: (item) => (item.attachments || []).filter(res => res.type?.includes('image/')).map(res =>
+            `<div class="image-bg"><img src="${res.externalLink || `https://${host}/file/${res.name}/${res.filename}`}"></div>`
+        )
+      },
       "feature": {
         buildUser: async () => "memos",
         buildDate: () => new Date(),
@@ -82,9 +122,15 @@ utils.jq(() => {
         if (Array.isArray(data)) {
           memos.version = "22-";
           memos.data = data;
-        } else if (data.memos) {
+          console.log("当前Memos版本为22-");
+        } else if (data.memos && !data.memos[0].attachments) {
           memos.version = "22+";
           memos.data = data.memos;
+          console.log("当前Memos版本为22+");
+        } else if (data.memos && data.memos[0].attachments) {
+          memos.version = "25+";
+          memos.data = data.memos;
+          console.log("当前Memos版本为25+");
         } else {
           memos.version = "feature";
           console.log("当前Memos版本过高，请到Stellar社区反馈");
@@ -93,4 +139,4 @@ utils.jq(() => {
       }
     };
   });
-});
+})();
