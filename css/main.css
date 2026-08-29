@@ -2336,6 +2336,12 @@ div.toast.show {
 .l_body .article.banner .content .bottom.only-title .title {
   padding: 0.75rem 0;
 }
+.article.banner .content .text.meta {
+  font-size: 0.8125rem;
+  color: var(--text-banner);
+  opacity: 0.7;
+  margin-top: 0.25rem;
+}
 .article.banner .bg+.content {
   --blur-bg: rgba(0,0,0,0);
   --blur-px: 1em;
@@ -7281,10 +7287,10 @@ details.toc[open] >div.body section .header+.doc_tree {
   opacity: 1;
 }
 .nav-area .menu .nav-item:hover > svg [fill="currentColor"] {
-  fill: var(--item-grad);
+  fill: currentColor;
 }
 .nav-area .menu .nav-item:hover > svg [stroke="currentColor"] {
-  stroke: var(--item-grad);
+  stroke: currentColor;
 }
 .nav-area .menu .nav-item.active {
   color: var(--text-p1);
@@ -7315,10 +7321,10 @@ details.toc[open] >div.body section .header+.doc_tree {
   background: linear-gradient(210deg, color-mix(in srgb, var(--item-theme) 50%, #fff) 20%, var(--item-theme) 60%);
 }
 .nav-area .menu .nav-item.active > svg [fill="currentColor"] {
-  fill: var(--item-grad);
+  fill: currentColor;
 }
 .nav-area .menu .nav-item.active > svg [stroke="currentColor"] {
-  stroke: var(--item-grad);
+  stroke: currentColor;
 }
 .nav-area .menu .nav-item:not(.themed):hover > svg,
 .nav-area .menu .nav-item:not(.themed).active > svg {
@@ -7326,7 +7332,7 @@ details.toc[open] >div.body section .header+.doc_tree {
 }
 .nav-area .menu .nav-item.themed:hover > svg,
 .nav-area .menu .nav-item.themed.active > svg {
-  color: var(--item-theme);
+  color: var(--item-theme-light);
 }
 .nav-area {
   margin: 2rem 0;
