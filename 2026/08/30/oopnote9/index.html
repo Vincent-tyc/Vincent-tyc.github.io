@@ -1,0 +1,1882 @@
+
+<!DOCTYPE html><html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.38.0" theme-name="Stellar" theme-version="1.38.0">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>oop学习笔记（9）智能指针及其他 - Vincent</title>
+
+  <meta name="description" content="要学习的内容还有很多..,deepseek说智能指针是C++里很重要的内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oop学习笔记（9）智能指针及其他">
+<meta property="og:url" content="http://example.com/2026/08/30/oopnote9/">
+<meta property="og:site_name" content="oop学习笔记（9）智能指针及其他">
+<meta property="og:description" content="要学习的内容还有很多..,deepseek说智能指针是C++里很重要的内容">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/touxiang.jpg">
+<meta property="article:published_time" content="2026-08-30T13:20:55.000Z">
+<meta property="article:modified_time" content="2026-08-31T09:11:59.771Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/touxiang.jpg"><meta name="twitter:title" content="oop学习笔记（9）智能指针及其他">
+  
+  
+  <meta name="keywords" content="编程">
+
+  <!-- feed -->
+  
+
+  <link rel="preload" href="/css/main.css?v=1.38.0" as="style">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.css">
+  <link rel="stylesheet" href="/css/main.css?v=1.38.0">
+
+
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"John Doe","sameAs":[],"image":"http://example.com/images/touxiang.jpg"},"dateCreated":"2026-08-30T21:20:55+08:00","dateModified":"2026-08-31T17:11:59+08:00","datePublished":"2026-08-30T21:20:55+08:00","description":"","headline":"oop学习笔记（9）智能指针及其他","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2026/08/30/oopnote9/"},"publisher":{"@type":"Organization","name":"John Doe","sameAs":[],"image":"http://example.com/images/touxiang.jpg","logo":{"@type":"ImageObject","url":"http://example.com/images/touxiang.jpg"}},"url":"http://example.com/2026/08/30/oopnote9/","keywords":"编程","image":[]}</script>
+  
+</head>
+<body><canvas id="background-canvas" aria-hidden="true"></canvas><div id="l_cover"></div><div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg"></div><img no-lazy class="avatar" src="/images/touxiang.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Vincent</div></a></div></header>
+
+
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
+
+<div class="widgets">
+<svg class="grad-def" width="0" height="0" aria-hidden="true" focusable="false"><defs><linearGradient id="leftbar-active-icon-grad" x1="75%" y1="6.7%" x2="6.7%" y2="125%"><stop offset="20%" style="stop-color:var(--item-theme-light)"/><stop offset="60%" style="stop-color:var(--item-theme)"/></linearGradient></defs></svg>
+<div class="nav-area">
+
+<nav class="menu dis-select"><a class="nav-item active themed" style="--item-grad:url(#menu-grad-post);--item-theme:#002FA7" title="博客" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg><span>博客</span><span class="active-dot"></span>
+<svg class="grad-def" width="0" height="0" aria-hidden="true" focusable="false"><defs><linearGradient id="menu-grad-post" x1="75%" y1="6.7%" x2="6.7%" y2="125%"><stop offset="20%" style="stop-color:var(--item-theme-light)"/><stop offset="60%" style="stop-color:var(--item-theme)"/></linearGradient></defs></svg>
+</a><a class="nav-item themed" style="--item-grad:url(#menu-grad-about);--item-theme:#002FA7" title="关于" href="/about/"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"/><path fill="currentColor" d="M10.99 14.308c-1.327-.978-3.49-2.84-3.49-4.593c0-2.677 2.475-3.677 4.5-1.609c2.025-2.068 4.5-1.068 4.5 1.609c0 1.752-2.163 3.615-3.49 4.593c-.454.335-.681.502-1.01.502c-.329 0-.556-.167-1.01-.502"/></svg><span>关于</span>
+<svg class="grad-def" width="0" height="0" aria-hidden="true" focusable="false"><defs><linearGradient id="menu-grad-about" x1="75%" y1="6.7%" x2="6.7%" y2="125%"><stop offset="20%" style="stop-color:var(--item-theme-light)"/><stop offset="60%" style="stop-color:var(--item-theme)"/></linearGradient></defs></svg>
+</a><a class="nav-item themed" style="--item-grad:url(#menu-grad-archive);--item-theme:#002FA7" title="归档" href="/archives/"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><span>归档</span>
+<svg class="grad-def" width="0" height="0" aria-hidden="true" focusable="false"><defs><linearGradient id="menu-grad-archive" x1="75%" y1="6.7%" x2="6.7%" y2="125%"><stop offset="20%" style="stop-color:var(--item-theme-light)"/><stop offset="60%" style="stop-color:var(--item-theme)"/></linearGradient></defs></svg>
+</a><a class="nav-item themed" style="--item-grad:url(#menu-grad-github);--item-theme:#002FA7" title="GitHub" target="_blank" rel="noopener" href="https://github.com/Vincent-tyc"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg><span>GitHub</span>
+<svg class="grad-def" width="0" height="0" aria-hidden="true" focusable="false"><defs><linearGradient id="menu-grad-github" x1="75%" y1="6.7%" x2="6.7%" y2="125%"><stop offset="20%" style="stop-color:var(--item-theme-light)"/><stop offset="60%" style="stop-color:var(--item-theme)"/></linearGradient></defs></svg>
+</a></nav>
+</div>
+
+
+<widget class="widget-wrapper slide-up recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2026/08/30/oopnote9/"><span class="title">oop学习笔记（9）智能指针及其他</span></a><a class="item title" href="/2026/08/29/cs61b/"><span class="title">cs61b</span></a><a class="item title" href="/2026/08/30/oopnote8/"><span class="title">右键引用与移动语义</span></a><a class="item title" href="/2026/08/28/oopnote7/"><span class="title">oop学习笔记（7） STL初步与深入</span></a><a class="item title" href="/2026/07/13/wendangshiyong/"><span class="title">如何美化你的笔记</span></a><a class="item title" href="/2026/08/14/update/"><span class="title">我的玩博客（调前端库）的经历</span></a><a class="item title" href="/2026/08/29/latex-jiaocheng/"><span class="title">LaTeX 数学公式简单入门</span></a><a class="item title" href="/2026/08/26/oopnote6/"><span class="title">oop笔记（6）模板（Ⅰ）基本知识与STL使用</span></a><a class="item title" href="/2026/08/14/youqu-de-tu/"><span class="title">有趣的图</span></a><a class="item title" href="/2026/07/13/oopnote2/"><span class="title">oop笔记（2）</span></a></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" title="切换日间/夜间模式" onclick="toggleDayNight()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" fill-rule="evenodd" d="M582.4 326.4c-140.8 0-256 115.2-256 256s115.2 256 256 256 256-115.2 256-256-115.2-256-256-256z m0 448c-70.4 0-131.2-36.8-164.8-92.8 12.8 3.2 27.2 4.8 40 4.8 121.6 0 219.2-99.2 219.2-219.2 0-17.6-1.6-35.2-6.4-52.8 60.8 32 102.4 96 102.4 169.6 1.6 104-84.8 190.4-190.4 190.4zM582.4 262.4c17.6 0 32-14.4 32-32v-128c0-17.6-14.4-32-32-32s-32 14.4-32 32v128c0 17.6 14.4 32 32 32zM262.4 582.4c0-17.6-14.4-32-32-32h-128c-17.6 0-32 14.4-32 32s14.4 32 32 32h128c17.6 0 32-14.4 32-32zM310.4 356.8c6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6 12.8-12.8 12.8-32 0-44.8l-91.2-91.2c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l91.2 91.2zM944 220.8c-12.8-12.8-32-12.8-44.8 0l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-33.6 0-44.8zM310.4 808l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-32 0-44.8-11.2-11.2-32-11.2-44.8 0z"></path></svg></a><a class="social" href="https://github.com/Vincent-tyc" target="_blank" rel="external nofollow noopener noreferrer"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+
+<div class="article-banner-wrap slide-up"><div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2026-08-30T13:20:55.000Z">2026-08-30</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2026-08-31T09:11:59.771Z">2026-08-31</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>oop学习笔记（9）智能指针及其他</span></h1>
+        <div class="text meta">全文共 6270 字</div>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div></div>
+<article class="md-text content slide-up"><!-- 文章正文从下面开始写 -->
+
+<h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><p>C语言里的指针有什么问题？</p>
+<h4 id="指针指向的内存何时释放"><a href="#指针指向的内存何时释放" class="headerlink" title="指针指向的内存何时释放"></a>指针指向的内存何时释放</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">science</span><span class="params">(<span class="type">double</span>* data, <span class="type">int</span> N)</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span>* temp = <span class="keyword">new</span> <span class="type">double</span>[N*<span class="number">2</span>];</span><br><span class="line">    <span class="built_in">do_setup</span>(data, temp, N);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">needed</span>(data, temp, N))</span><br><span class="line">    <span class="comment">//注意这里少了一行 delete[] temp;</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">calculate</span>(data, temp, N);</span><br><span class="line">    <span class="keyword">delete</span>[] temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<details class="tag-plugin colorful folding" color="blue" child="true"><summary><p>数组和指针的区别</p>
+</summary><div class="body"><p>我们说，一个数组 <code>double arr[N]</code>，即一个 <code>double[N]</code> 类型的变量 <code>arr</code>，事实上包含了 3 部分信息：</p> <ul> <li>数组的基地址 (<code>&amp;arr[0]</code>)</li> <li>数组的元素类型 (<code>double</code>)</li> <li>数组的元素个数 (<code>N</code>)</li> </ul> <p>在上面这个函数中我们传入了一个 <code>double *</code>的指针，这么做只传递了这个数组 <strong>一部分</strong>的信息。于是我们又传了一个<code>int</code>的元素个数才完整表示这个数组。这就是指针与数组的一些区别。</p> </div></details>
+
+
+<p>这个函数在最开头 <code>new</code> 了一个类型为 <code>double</code> 的数组，做了一些前期的准备，然后判断需不需要计算。如果不需要计算的话，函数返回。如果需要计算的话就计算，计算后 <code>delete</code> 这个不再用的 <code>temp</code>。</p>
+<p>但是，如果这个 <code>if</code> 的条件为真，它直接 <code>return</code>，<code>new</code> 出来的这个 <code>temp</code> 没有被释放。</p>
+<p>也就是说，为了避免这个问题，我们应该对这个函数的每一个出口都要把他申请过的所有的资源全部释放一遍，也就是加上上面注释的内容。</p>
+<p>总的来说这样的指针用法比较冗余，容易出错，不易维护。</p>
+<p>考虑一些解决方法，譬如通过某种机制，默认在函数结束时释放所有指针，实际上这也是不可行的。</p>
+<h4 id="指针指向单个对象还是数组"><a href="#指针指向单个对象还是数组" class="headerlink" title="指针指向单个对象还是数组"></a>指针指向单个对象还是数组</h4><p>实际上编译器无法判断出这个指针指的是单个对象还是一个数组，这意味着它不知道该用** <code>delete</code> 还是 <code>delete0[]</code> **,同时如果是单个对象，那么 <code>++p</code>, <code>--p</code>也不被允许（当然数组在越界是也不行）</p>
+<h4 id="指针是否允许为空"><a href="#指针是否允许为空" class="headerlink" title="指针是否允许为空"></a>指针是否允许为空</h4><p>C++中指针类型本身无法表达是否为空，我们需要经常自己判断指针是否为 <code>nullptr</code>。如果可以保证某种指针可以永远不为空的话，就可以省去空指针检查，从而提高代码效率。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>总的来说，如果有一个智能指针就好了,我们希望它：</p>
+<ul>
+<li>自动回收资源：在生命周期结束后，智能指针能够自动释放资源</li>
+<li>知道指向的是单个对象还是数组：智能指针能够根据指针的类型，自动选择 <code>delete</code> 还是 <code>delete[]</code></li>
+<li>增加一些限制：有的时候，可以强制要求智能指针不为空</li>
+</ul>
+<h3 id="垃圾回收-GC-garbage-collection"><a href="#垃圾回收-GC-garbage-collection" class="headerlink" title="垃圾回收 |GC(garbage collection)"></a>垃圾回收 |GC(garbage collection)</h3><p>垃圾回收（Garbage Collection）的核心是 <strong>回收「不可达」</strong> 的对象。<br>Java&#x2F;C#会采用一种在运行是GC的方法，但是C++并没有这么做。</p>
+<details class="tag-plugin colorful folding" color="blue" child="true"><summary><p>如何判断对象的可达性</p>
+</summary><div class="body"><p>当一个对象不能通过任何途径被访问到时，我们称这个对象是「不可达」的。这个时候就可以回收了，总的来说有这么写判断方法：</p> <ul> <li>Reference Counting（引用计数）<br>引用计数的核心思想是为每个对象维护一个 <strong>引用计数器</strong>，记录有多少个指针指向该对象。当引用计数为零时，说明没有任何指针指向该对象，因此可以安全地回收该对象的内存。<br>引用计数的优点是实现简单，且可以立即回收不再使用的对象。但它的缺点是：<ul> <li><strong>循环引用问题</strong>：如果两个对象互相引用，它们的引用计数永远不会为零，导致内存泄漏。</li> <li><strong>性能开销</strong>：每次指针的赋值或析构都需要更新引用计数，可能会带来额外的性能开销。</li> </ul> </li> <li><strong>Mark &amp; Sweep</strong><br>这是一种更复杂的垃圾回收方式。它的核心思想是从程序的 Root Set（如全局变量、栈上的变量等）开始，递归地标记所有可以访问到的对象。标记完成后，垃圾回收器会清除所有未被标记的对象，回收它们的内存。<br>它的优点是能够处理循环引用问题，但它的缺点是：<ul> <li><strong>暂停时间较长</strong>：标记和清除的过程可能会暂停程序的执行，影响程序的响应速度。</li> <li><strong>内存碎片问题</strong>：清除过程中可能会产生内存碎片，导致内存利用率下降。</li> </ul> </li> </ul> </div></details>
+
+<details class="tag-plugin colorful folding" color="blue" child="true"><summary><p>对 不可达 的对象，回收多大空间？</p>
+</summary><div class="body"><p>这个问题是一个 <strong>类型安全</strong> 的问题，而遗憾的是C++并不是一门类型安全的语言：</p> <ul> <li><code>void *</code>: C 和 C++ 都允许指针到 <code>void *</code> 类型的转换，这在损失元素个数的基础上进一步损失了元素类型的信息(丢失类型与大小)，导致更不知道该释放多少空间。</li> <li><code>union</code>: <code>union</code> 也是一个类型不安全的工具，它可以让一个变量在不同的时间点代表不同的类型，这也会导致不知道该释放多少空间。</li> </ul> </div></details>
+
+<details class="tag-plugin colorful folding" color="blue" child="true"><summary><p>内存回收需要考虑的一些问题</p>
+</summary><div class="body"><p>需要考虑哪些指标？</p> <ul> <li>总体运行时间</li> <li>碎片</li> <li>停顿时间</li> <li>Locality（地址？）<br>更多考虑</li> <li>并行 &#x2F; 并发</li> <li>类型不安全</li> </ul> </div></details>
+
+<p>总之，C++没有采用GC，而是选择智能指针 + RAII 的方法，我们接着往下看</p>
+<h3 id="std-unique-ptr"><a href="#std-unique-ptr" class="headerlink" title="std::unique_ptr"></a>std::unique_ptr</h3><h4 id="conception"><a href="#conception" class="headerlink" title="conception"></a>conception</h4><p>第一种智能指针叫做 <code>unique_ptr</code>，它定义在 <code>&lt;memory&gt;</code>头文件中。<br><code>unique_ptr</code>是 <strong>独占所有权</strong> 的指针：</p>
+<ul>
+<li>一个对象只能被一个 <code>unique_ptr</code>拥有</li>
+<li>不能拷贝、只能移动（移动赋值那种）</li>
+<li>析构时自动释放所拥有的对象</li>
+</ul>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>看看怎么用的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::unique_ptr&lt;HelperType&gt; <span class="title">owner</span><span class="params">(<span class="keyword">new</span> HelperType(inputs))</span></span>;<span class="comment">//owner 是一个智能指针</span></span><br><span class="line">owner-&gt;<span class="built_in">calculate</span>();        <span class="comment">// 用 -&gt; 访问成员</span></span><br><span class="line"><span class="built_in">calculate_more</span>(*owner);    <span class="comment">// 用 * 解引用</span></span><br><span class="line"><span class="keyword">return</span> owner-&gt;<span class="built_in">important_result</span>();</span><br><span class="line"><span class="comment">// 函数结束时，owner 自动析构，HelperType 被 delete</span></span><br></pre></td></tr></table></figure>
+
+<p><code>unique_ptr</code>提供了一些和普通指针差不多的功能：</p>
+<ul>
+<li>成员访问运算符 <code>-&gt;</code>：用于访问指针所指向对象的成员。</li>
+<li>间接访问运算符 <code>*</code>：用于解引用指针，获取指针所指向的对象。</li>
+</ul>
+<p>在函数结束时 ，<code>owner</code>的声明&#x3D;&#x3D;生命周期结束了，<code>unique_ptr</code>会自动释放它所拥有的对象。</p>
+<p>我们看看把 <code>unique_ptr</code>放到类里面的情况：<br>注意如果你的类成员变量时像<code>uniqie_ptr</code>这样能够自己管理自己的对象，那么SMF(特殊成员函数)像是拷贝赋值、构造，析构函数这些就不用写了，这也是 C++ Rule of Zero 原则的一个体现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">WidgetBase* <span class="title">create_widget</span><span class="params">(InputType)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line">    std::unique_ptr&lt;WidgetBase&gt; owner; <span class="comment">//owner是unique_ptr</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>(InputType inputs)</span><br><span class="line">        : <span class="built_in">owner</span>(<span class="built_in">create_widget</span>(inputs)) &#123; &#125;<span class="comment">//初始化成员函数</span></span><br><span class="line">    ~<span class="built_in">MyClass</span>() = <span class="keyword">default</span>; <span class="comment">//使用默认的析构函数</span></span><br><span class="line">    <span class="comment">// ... member functions that use owner-&gt; ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>MyClass</code> 的析构会自动触发 <code>owner</code> 的析构函数</li>
+<li><code>MyClass</code> 的移动构造和移动赋值会自动触发 <code>owner</code> 的移动构造和移动赋值</li>
+<li>由于 <code>owner</code> 的的拷贝构造和拷贝赋值是被 <code>delete</code> 的，所以 <code>MyClass</code> 的拷贝构造和拷贝赋值是被 <code>delete</code> 的，所以 <code>MyClass</code> 不能被拷贝（<strong>总之因为有智能指针所以这个类只能被转移不能被拷贝了</strong>）<ul>
+<li>（回顾上一节的内容：拷贝构造隐式声明被定义为删除(&#x3D; delete)，如果该类有无法拷贝构造或析构的非静态成员或基类，或者该类有用户定义的移动构造（你自己写一个上一节里的右值引用什么的）或移动赋值。拷贝复制类似。）（unique_ptr就没有拷贝构造）</li>
+</ul>
+</li>
+</ul>
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p><code>unique_ptr</code>类是怎么实现的？我们首先考虑单个对象的情况：</p>
+<h4 id="成员类型"><a href="#成员类型" class="headerlink" title="成员类型"></a>成员类型</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">unique_ptr</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">using</span> element_type = T; 指向元素的类型是 T</span><br><span class="line">    <span class="keyword">using</span> pointer = T*;<span class="comment">// 指针类型 T *</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 模板是这样，包含多种类型</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="构造与析构"><a href="#构造与析构" class="headerlink" title="构造与析构"></a>构造与析构</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">unique_ptr</span> &#123;</span><br><span class="line">    T* ptr;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="comment">//noexcept表示这些函数不会抛出异常</span></span><br><span class="line">    <span class="built_in">unique_ptr</span>() <span class="keyword">noexcept</span> : <span class="built_in">ptr</span>(<span class="literal">nullptr</span>) &#123; &#125;<span class="comment">//不接受指针的默认构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">unique_ptr</span><span class="params">(T* p)</span> <span class="keyword">noexcept</span> : ptr(p) &#123;</span> &#125; <span class="comment">//explicit禁止隐性转换</span></span><br><span class="line">    ~<span class="built_in">unique_ptr</span>() <span class="keyword">noexcept</span> &#123; <span class="keyword">delete</span> ptr; &#125; <span class="comment">//一个析构函数</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="移动构造和移动赋值"><a href="#移动构造和移动赋值" class="headerlink" title="移动构造和移动赋值"></a>移动构造和移动赋值</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct</span> <span class="title class_">unique_prt</span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">unique_ptr</span>(unique_ptr <span class="type">const</span>&amp;) = <span class="keyword">delete</span>; <span class="comment">//拷贝构造</span></span><br><span class="line">    unique_ptr&amp; <span class="keyword">operator</span>=(unique_ptr <span class="type">const</span>&amp;) = <span class="keyword">delete</span>; <span class="comment">//拷贝赋值</span></span><br><span class="line">    <span class="comment">//两个都是被delete掉的，也就是他是不能调用的，而它确实不能被拷贝</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">unique_ptr</span>(unique_ptr&amp;&amp; o) <span class="keyword">noexcept</span> </span><br><span class="line">        : <span class="built_in">ptr</span>(std::<span class="built_in">exchange</span>(o.ptr, <span class="literal">nullptr</span>)) &#123; &#125; <span class="comment">//这里有移动构造</span></span><br><span class="line">    unique_ptr&amp; <span class="keyword">operator</span>=(unique_ptr&amp;&amp; o) <span class="keyword">noexcept</span> &#123;  <span class="comment">//这里有移动赋值</span></span><br><span class="line">        <span class="keyword">delete</span> ptr;</span><br><span class="line">        ptr = o.ptr;</span><br><span class="line">        o.ptr = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="重载运算符"><a href="#重载运算符" class="headerlink" title="重载运算符"></a>重载运算符</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">unique_ptr</span> &#123;</span><br><span class="line"></span><br><span class="line">    T&amp; <span class="keyword">operator</span>*() <span class="type">const</span> <span class="keyword">noexcept</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> *ptr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    T* <span class="keyword">operator</span>-&gt;() <span class="type">const</span> <span class="keyword">noexcept</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> ptr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>我们之前没有见过 <code>-&gt;</code> 运算符重载。事实上 <code>owner-&gt;calculate()</code> 的语义是 <code>(owner.operator-&gt;())-&gt;calculate()</code>(编译器会调用<code>owener.operator-&gt;()</code>)。而 <code>(owner.operator-&gt;())</code> 返回的是 <code>ptr</code>，得到 <code>ptr-&gt;calculate()</code>。</p>
+<h4 id="其他成员函数"><a href="#其他成员函数" class="headerlink" title="其他成员函数"></a>其他成员函数</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">unique_ptr</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">T* <span class="title">release</span><span class="params">()</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">        T* old = ptr;</span><br><span class="line">        ptr = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="keyword">return</span> old;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">reset</span><span class="params">(T* p = <span class="literal">nullptr</span>)</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">        <span class="keyword">delete</span> ptr;</span><br><span class="line">        ptr = p;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">T* <span class="title">get</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ptr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="keyword">operator</span> <span class="title">bool</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ptr != <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>release()</code>释放所有权，返回裸指针（不释放内存）</li>
+<li><code>reset(p)</code>释放当前对象，接管新对象 <code>p</code></li>
+<li><code>get()</code>返回裸指针（不释放所有权）</li>
+<li><code>operator bool()</code>判断是否为空，可用于 <code>if (ptr)</code>,这使得智能指针和普通指针一样可以直接用在条件语句中，即隐式转换为 <code>bool</code> 类型。</li>
+</ul>
+<p>这边其实需要一些理解。比如说<code>.get()</code>返回裸指针，但是不释放所有权，这是什么意思呢？我们知道<code>p</code>是一个智能指针，但是如果有个函数只接受原始的那种<code>int *</code>的指针，或者是某些调试情况你就是要看一眼这个对象内部的状态（但是没办法做操作，因为所有权没有转移），这个时候要用<code>.get()</code>。</p>
+<h4 id="使用make-unique来创建-unique-ptr对象"><a href="#使用make-unique来创建-unique-ptr对象" class="headerlink" title="使用make_unique来创建 unique_ptr对象"></a>使用<code>make_unique</code>来创建 <code>unique_ptr</code>对象</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</span><br><span class="line"><span class="function">unique_ptr&lt;T&gt; <span class="title">make_unique</span><span class="params">(Args&amp;&amp;... args)</span></span>;</span><br><span class="line"><span class="comment">//make_unique长这样</span></span><br><span class="line"></span><br><span class="line">std::unique_ptr&lt;Type&gt; ptr = std::<span class="built_in">make_unique</span>&lt;Type&gt;(args...);</span><br><span class="line"><span class="comment">//这样使用</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="数组版本：unique-ptr"><a href="#数组版本：unique-ptr" class="headerlink" title="数组版本：unique_ptr&lt;T[]&gt;"></a>数组版本：<code>unique_ptr&lt;T[]&gt;</code></h4><p><code>unique_ptr</code>对于数组版本特别又定制了一些方法：</p>
+<ul>
+<li><code>unique_ptr&lt;T[]&gt;</code> 提供了对数组类型的支持，自动调用 <code>delete[]</code> 来释放内存。</li>
+<li><code>unique_ptr&lt;T[]&gt;</code> 提供了下标运算符 <code>operator[]</code>，可以像使用普通数组一样访问元素。</li>
+<li>可以使用 <code>make_unique&lt;T[]&gt;(size)</code> 来创建一个动态数组，其中 size 是数组的大小。与普通的 <code>unique_ptr&lt;T&gt;</code> 不同，<code>make_unique&lt;T[]&gt;</code> 只接受一个参数，即数组的大小，而不接受构造函数参数。这是因为数组类型的 <code>unique_ptr</code> 不支持构造函数参数。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不能这样写：无法传递构造参数给每个元素</span></span><br><span class="line"><span class="keyword">auto</span> p1 = std::<span class="built_in">make_unique</span>&lt;Widget[]&gt;(<span class="number">10</span>, <span class="number">42</span>, <span class="number">3.14</span>);  <span class="comment">// 编译错误！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 只能指定数组大小</span></span><br><span class="line"><span class="keyword">auto</span> p2 = std::<span class="built_in">make_unique</span>&lt;Widget[]&gt;(<span class="number">10</span>);  <span class="comment">// 创建 10 个 Widget，默认构造</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="智能指针实例"><a href="#智能指针实例" class="headerlink" title="智能指针实例"></a>智能指针实例</h4><p>开头程序的问题是，在某一处的<code>return;</code>少了一步 <code>delete</code>，但是我们如果用<code>unique_ptr</code>来代替的话：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">science</span><span class="params">(<span class="type">double</span>* data, <span class="type">int</span> N)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> temp = std::<span class="built_in">make_unique</span>&lt;<span class="type">double</span>[]&gt;(N * <span class="number">2</span>); <span class="comment">// 使用 `unique_ptr` 代替指针</span></span><br><span class="line">    <span class="built_in">do_setup</span>(data, temp.<span class="built_in">get</span>(), N);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">needed</span>(data, temp.<span class="built_in">get</span>(), N)) <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">calculate</span>(data, temp.<span class="built_in">get</span>(), N);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个改进后的代码中， <code>temp.get()</code> 返回 <code>unique_ptr</code> 所管理的原始指针，这样就可以将它传递给需要 <code>double*</code> 的函数（如 <code>do_setup</code>、<code>needed</code> 和 <code>calculate</code>）。</p>
+<p>并且 <code>temp</code> 是一个 <code>unique_ptr&lt;double[]&gt;</code>，它会在 <code>science</code> 函数结束时自动释放所管理的内存，无论函数是如何退出的（通过 <code>return</code> 还是正常结束）。</p>
+<h4 id="所有权转移"><a href="#所有权转移" class="headerlink" title="所有权转移"></a>所有权转移</h4><p>对于这个函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::unique_ptr&lt;<span class="type">float</span>[]&gt; <span class="title">science</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    std::unique_ptr&lt;<span class="type">float</span>[]&gt; x,</span></span></span><br><span class="line"><span class="params"><span class="function">    std::unique_ptr&lt;<span class="type">float</span>[]&gt; y, <span class="type">int</span> N)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> z = std::<span class="built_in">make_unique</span>&lt;<span class="type">float</span>[]&gt;(N);</span><br><span class="line">    <span class="built_in">saxpy</span>(<span class="number">2.5</span>, x.<span class="built_in">get</span>(), y.<span class="built_in">get</span>(), z.<span class="built_in">get</span>(), N);</span><br><span class="line">    <span class="keyword">return</span> z;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子中，「所有权」其实既有通过函数参数转移到了这个函数中的情况，也有通过返回值传出了函数的情况。我们可以使用 <code>unique_ptr</code> 来代替这个例子。</p>
+<ul>
+<li>需要给一个函数 <strong>传递</strong> 所有权时，按值 (移动) 传递 <code>unique_ptr</code></li>
+<li>需要从一个函数 <strong>返回</strong> 所有权时，按值 (移动) 返回 <code>unique_ptr</code></li>
+</ul>
+<p><del>我觉得这是句废话，但是这句话一开始把我唬住了</del></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::unique_ptr&lt;<span class="type">float</span>[]&gt; <span class="title">science</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    std::unique_ptr&lt;<span class="type">float</span>[]&gt; x,    <span class="comment">// 传入 x 的内存所有权</span></span></span></span><br><span class="line"><span class="params"><span class="function">    std::unique_ptr&lt;<span class="type">float</span>[]&gt; y,    <span class="comment">// 传入 y 的内存所有权</span></span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">int</span> N)</span> </span>&#123;                       <span class="comment">// N 是数组长度</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> z = std::<span class="built_in">make_unique</span>&lt;<span class="type">float</span>[]&gt;(N);          <span class="comment">// 1. 在堆上新建一个数组</span></span><br><span class="line">    <span class="built_in">saxpy</span>(<span class="number">2.5</span>, x.<span class="built_in">get</span>(), y.<span class="built_in">get</span>(), z.<span class="built_in">get</span>(), N);       <span class="comment">// 2. 借用三个裸指针做计算，不转移所有权，不释放内存</span></span><br><span class="line">    <span class="keyword">return</span> z;                                       <span class="comment">// 3. 把 z 的所有权返回给调用者，z的所有权被移出函数，转移给调用者</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//那么science这个函数在外部是怎么被调用的呢？</span></span><br><span class="line"><span class="keyword">auto</span> upx = std::<span class="built_in">make_unique</span>&lt;<span class="type">float</span>[]&gt;(<span class="number">100</span>);   <span class="comment">// 调用者拥有 x</span></span><br><span class="line"><span class="keyword">auto</span> upy = std::<span class="built_in">make_unique</span>&lt;<span class="type">float</span>[]&gt;(<span class="number">100</span>);   <span class="comment">// 调用者拥有 y</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用 science，把 x 和 y 的所有权转移进函数</span></span><br><span class="line"><span class="keyword">auto</span> result = <span class="built_in">science</span>(std::<span class="built_in">move</span>(upx), std::<span class="built_in">move</span>(upy), <span class="number">100</span>);</span><br><span class="line"><span class="comment">// 这行之后，upx 和 upy 都是空指针（nullptr），所有权被移走了</span></span><br><span class="line"><span class="comment">// result 现在拥有新数组的所有权（那个z被移出来了）</span></span><br></pre></td></tr></table></figure>
+
+<p>但实际上<code>science</code>内部并不需要 <code>x</code> 、<code>y</code>的所有权，所以我们直接传递裸指针就行了，这避免了不必要的所有权转移：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">science</span><span class="params">(<span class="type">float</span>* x, <span class="type">float</span>* y, <span class="type">int</span> N)</span> </span>&#123;<span class="comment">//裸指针，对吧</span></span><br><span class="line">    <span class="keyword">auto</span> z = std::<span class="built_in">make_unique</span>&lt;<span class="type">float</span>[]&gt;(N);</span><br><span class="line">    <span class="built_in">saxpy</span>(<span class="number">2.5</span>, x, y, z.<span class="built_in">get</span>(), N);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以传递智能指针还是转递<code>.get()</code>或者是<code>*</code>的裸指针，是要看你要不要转移所有权</p>
+<h4 id="用法小结：什么情况需要转移所有权-什么情况不需要？"><a href="#用法小结：什么情况需要转移所有权-什么情况不需要？" class="headerlink" title="用法小结：什么情况需要转移所有权,什么情况不需要？"></a>用法小结：什么情况需要转移所有权,什么情况不需要？</h4><p>将 <code>unique_ptr</code> 作为引用传递给函数的情况，通常是函数需要重新设置指针的情况。这种情况下，调用者需要明确地知道函数会改变指针的指向。</p>
+<ul>
+<li>工厂函数（Factory Function）—— 最常见的“返回值转移”</li>
+<li>容器操作（Container Operations）—— 把对象“放”进容器或“取”出来</li>
+<li>资源管理类的移动语义（Move Semantics）</li>
+<li>自定义删除器（Custom Deleters）与资源释放</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">unique_ptr&lt;widget&gt; <span class="title">factory</span><span class="params">(...)</span></span>;  <span class="comment">// source - produces widget</span></span><br><span class="line"><span class="keyword">auto</span> ptr = <span class="built_in">factory</span>(...);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">use</span><span class="params">(widget&amp;)</span></span>;  <span class="comment">// use - use content but not consume widget</span></span><br><span class="line"><span class="built_in">use</span>(*ptr);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">use</span><span class="params">(widget*)</span></span>;  <span class="comment">// use - use content but not consume widget</span></span><br><span class="line"><span class="built_in">use</span>(ptr.<span class="built_in">get</span>()); <span class="comment">//如果函数内部需要判断指针是否为空，就用这个版本。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sink</span><span class="params">(unique_ptr&lt;widget&gt;)</span></span>;  <span class="comment">// sink - consumes widget</span></span><br><span class="line"><span class="built_in">sink</span>(std::<span class="built_in">move</span>(ptr));</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">reseat</span><span class="params">(unique_ptr&lt;widget&gt;&amp;)</span></span>;  <span class="comment">// &quot;will&quot; or &quot;might&quot; reseat ptr</span></span><br><span class="line"><span class="built_in">reseat</span>(ptr);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">thinko</span><span class="params">(<span class="type">const</span> unique_ptr&lt;widget&gt;&amp;)</span></span>; <span class="comment">// usually not what you want</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="栈内存与堆内存"><a href="#栈内存与堆内存" class="headerlink" title="栈内存与堆内存"></a>栈内存与堆内存</h4><p>智能指针，所有权等等本质还是这个堆内存、栈内存的问题。所有权的转移是为了更好的销毁，那为什么要销毁呢？为了不占太多堆内存。栈变量不是挺好，离开作用域自动销毁。但是栈的大小比堆小多了，放不下这样。</p>
+<h4 id="陷阱"><a href="#陷阱" class="headerlink" title="陷阱"></a>陷阱</h4><p>不要把同一个内存块释放两次，也不要用同一个裸指针初始化两个<code>unique_ptr</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">T* p = <span class="keyword">new</span> <span class="built_in">T</span>();              <span class="comment">// 1. 创建了一个裸指针</span></span><br><span class="line"></span><br><span class="line"><span class="function">std::unique_ptr&lt;T&gt; <span class="title">a</span><span class="params">(p)</span></span>;     <span class="comment">// 2. a 接管了 p，认为自己是唯一的主人</span></span><br><span class="line"><span class="function">std::unique_ptr&lt;T&gt; <span class="title">b</span><span class="params">(p)</span></span>;     <span class="comment">// 3. b 也接管了 p，认为自己是唯一的主人</span></span><br><span class="line"><span class="comment">// 程序结束时：a 销毁 → delete p 正确</span></span><br><span class="line"><span class="comment">//            b 销毁 → delete p 错误 重复释放！程序崩溃</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> c = std::<span class="built_in">make_unique</span>&lt;T&gt;();    <span class="comment">// c 拥有一个 T</span></span><br><span class="line"><span class="function">std::unique_ptr&lt;T&gt; <span class="title">d</span><span class="params">(c.get())</span></span>;     <span class="comment">// d 也拥有了同一个 T</span></span><br><span class="line"><span class="comment">// 双重释放！</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="unique-ptr-在容器中使用"><a href="#unique-ptr-在容器中使用" class="headerlink" title="unique_ptr 在容器中使用"></a>unique_ptr 在容器中使用</h4><p>所以怎么放进 <code>std::vector</code>里呢？</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;std::unique_ptr&lt;T&gt;&gt; v;</span><br><span class="line"></span><br><span class="line">v.<span class="built_in">push_back</span>(std::<span class="built_in">make_unique</span>&lt;T&gt;());</span><br><span class="line"></span><br><span class="line">std::unique_ptr&lt;T&gt; a;</span><br><span class="line">v.<span class="built_in">push_back</span>(std::<span class="built_in">move</span>(a)); <span class="comment">//放进容器必须使用 std::move ，a变为空</span></span><br><span class="line"></span><br><span class="line">v[<span class="number">0</span>] = std::<span class="built_in">make_unique</span>&lt;T&gt;(); <span class="comment">//旧对象被自动delete，新对象接管</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> it = v.<span class="built_in">begin</span>();</span><br><span class="line">v.<span class="built_in">erase</span>(it); <span class="comment">// 元素被删除，其所指向的对象也被自动 delete</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="std-shared-ptr"><a href="#std-shared-ptr" class="headerlink" title="std::shared_ptr"></a>std::shared_ptr</h3><h4 id="concept"><a href="#concept" class="headerlink" title="concept"></a>concept</h4><p><code>shared_ptr</code> 其实是一个更高级的智能指针版本。它高级的地方就在于它的 <strong>所有权是可以共享</strong> 的。这就是我们之前说的「引用计数」的完整版本。(前面讲过引用计数了)</p>
+<p>很简单的一个引用计数的实现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">ControlBlock</span> &#123;</span><br><span class="line">    <span class="type">int</span>* object; <span class="comment">// 指向实际对象</span></span><br><span class="line">    <span class="type">int</span> count;   <span class="comment">// 引用计数</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>当 <code>shared_ptr</code> 被复制时，新的 <code>shared_ptr</code> 会指向同一个 <code>Control Block</code>，并且引用计数会加 <code>1</code>。也就是说，<code>shared_ptr</code> 的拷贝是浅拷贝。</p>
+<p>因此我们可以看到，<code>shared_ptr</code> 是 <strong>有额外的内存和性能开销的</strong>，并不像 <code>unique_ptr</code> 那样只是一个指针的包装。</p>
+<h4 id="接口（interface-）"><a href="#接口（interface-）" class="headerlink" title="接口（interface?）"></a>接口（interface?）</h4><p>构造与析构（这里就不写在小标题上了）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">shared_ptr</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">shared_ptr</span>() <span class="keyword">noexcept</span>;      <span class="comment">// Creates empty shared_ptr</span></span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">shared_ptr</span><span class="params">(T*)</span></span>;    <span class="comment">// Starts managing an object</span></span><br><span class="line">    ~<span class="built_in">shared_ptr</span>() <span class="keyword">noexcept</span>;     <span class="comment">// Decrements count, and Cleanup if count == 0，数量减少，如果为0就清空</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>拷贝和移动，以及从<code>unique_ptr</code>的移动：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">shared_ptr</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">shared_ptr</span>(shared_ptr <span class="type">const</span>&amp;) <span class="keyword">noexcept</span>;     <span class="comment">// copy ptrs, count++</span></span><br><span class="line">    <span class="comment">//shared_ptr是有拷贝赋值，拷贝构造的</span></span><br><span class="line">    <span class="built_in">shared_ptr</span>(shared_ptr&amp;&amp;) <span class="keyword">noexcept</span>;          <span class="comment">// transfer ownership</span></span><br><span class="line">    <span class="built_in">shared_ptr</span>(unique_ptr&lt;T&gt;&amp;&amp;);                <span class="comment">// transfer ownership</span></span><br><span class="line"><span class="comment">//移动构造会转移所有权</span></span><br><span class="line">    <span class="comment">// origin count will decrease, possibly cleanup:</span></span><br><span class="line">    shared_ptr&amp; <span class="keyword">operator</span>=(shared_ptr <span class="type">const</span>&amp;) <span class="keyword">noexcept</span>;</span><br><span class="line">    shared_ptr&amp; <span class="keyword">operator</span>=(shared_ptr&amp;&amp;) <span class="keyword">noexcept</span>;</span><br><span class="line">    shared_ptr&amp; <span class="keyword">operator</span>=(unique_ptr&lt;T&gt;&amp;&amp;);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>几点注意：</p>
+<ul>
+<li><strong>拷贝构造</strong>：引用计数加 1。<code>shared_ptr</code>有拷贝赋值、拷贝构造</li>
+<li><strong>移动构造</strong>：不会增加引用计数，因为原 <code>shared_ptr</code> 不再指向该对象。</li>
+<li><code>shared_ptr</code> 可以接受 <code>unique_ptr</code> 的右值引用，从而将独占所有权转换为共享所有权。</li>
+<li>在赋值操作中，<code>shared_ptr</code> 会先减少原对象的引用计数，然后再指向新对象。如果原对象的引用计数减到 <code>0</code>，则会释放原对象。</li>
+</ul>
+<p>重载运算符：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">shared_ptr</span> &#123;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">    T&amp; <span class="keyword">operator</span>*() <span class="type">const</span> <span class="keyword">noexcept</span>;</span><br><span class="line">    T* <span class="keyword">operator</span>-&gt;() <span class="type">const</span> <span class="keyword">noexcept</span>; <span class="comment">//和unique_ptr无甚区别</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>其他成员函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">shared_ptr</span> &#123;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">reset</span><span class="params">(T*)</span></span>;</span><br><span class="line">    <span class="function">T* <span class="title">get</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span></span>;</span><br><span class="line">    <span class="function"><span class="type">long</span> <span class="title">use_count</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="keyword">operator</span> <span class="title">bool</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">noexcept</span></span>;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="std-make-shared"><a href="#std-make-shared" class="headerlink" title="std::make_shared"></a><code>std::make_shared</code></h4><p>类似 <code>unique_ptr</code> 的 <code>make_unique</code>，<code>shared_ptr</code> 也有一个 <code>make_shared</code> 函数，用于创建 <code>shared_ptr</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</span><br><span class="line"><span class="function">shared_ptr&lt;T&gt; <span class="title">make_shared</span><span class="params">(Args&amp;&amp;... args)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> p = std::<span class="built_in">make_shared</span>&lt;Widget&gt;(args...);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一次内存分配：对象和控制块一起分配，比分开 new 两次更快。</li>
+<li>更好的 locality：对象和控制块在内存中靠得更近，缓存更友好。</li>
+</ul>
+<h3 id="shared-ptr作为函数参数和返回值"><a href="#shared-ptr作为函数参数和返回值" class="headerlink" title="shared_ptr作为函数参数和返回值"></a><code>shared_ptr</code>作为函数参数和返回值</h3><p>类似于上一节的讨论，大概有这么些：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">shared_ptr&lt;widget&gt; <span class="title">factory</span><span class="params">()</span></span>;               <span class="comment">// 工厂函数，返回共享所有权</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">share</span><span class="params">( shared_ptr&lt;widget&gt; )</span></span>;           <span class="comment">// 按值传递，引用计数 +1，函数会持有对象的副本</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">reseat</span><span class="params">( shared_ptr&lt;widget&gt;&amp; )</span></span>;         <span class="comment">// 通过引用传递，可能重新指向其他对象</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">may_share</span><span class="params">( <span class="type">const</span> shared_ptr&lt;widget&gt;&amp; )</span></span>;<span class="comment">// 只读借用，临时增加引用计数</span></span><br></pre></td></tr></table></figure>
+
+<details class="tag-plugin colorful folding" color="blue" child="true"><summary><p>工厂函数和”Widget”</p>
+</summary><div class="body"><p>工厂函数（Factory Function）专门用来“生产”并返回某个对象的函数。<br>工厂函数通常返回一个动态分配的对象（比如 std::unique_ptr 或 std::shared_ptr）。</p> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一个典型的工厂函数</span></span><br><span class="line"><span class="function">std::unique_ptr&lt;Widget&gt; <span class="title">createWidget</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> std::<span class="built_in">make_unique</span>&lt;Widget&gt;(<span class="comment">/* 参数 */</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  <p>“Widget” 是 C++ 文档和教材中，表示“随便什么类”的占位符名字。<br>其他常见的占位符名字：</p> <ul> <li><code>Foo</code>、<code>Bar</code>、<code>Baz</code>：通用占位符</li> <li><code>T</code>：模板中的类型参数</li> <li><code>Arg</code>、<code>Param</code>：参数</li> <li><code>Object</code>：面向对象中的基类占位符</li> </ul> </div></details>
+
+<h3 id="shared-ptr的常见陷阱"><a href="#shared-ptr的常见陷阱" class="headerlink" title="shared_ptr的常见陷阱"></a><code>shared_ptr</code>的常见陷阱</h3><p>依旧是double free 问题：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">T* p = ...;</span><br><span class="line"><span class="function">std::shared_ptr&lt;T&gt; <span class="title">a</span><span class="params">(p)</span></span>;</span><br><span class="line"><span class="function">std::shared_ptr&lt;T&gt; <span class="title">b</span><span class="params">(p)</span></span>;</span><br><span class="line"><span class="comment">// runtime error: double free</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> a = std::<span class="built_in">make_shared</span>&lt;T&gt;();</span><br><span class="line"><span class="function">std::shared_ptr&lt;T&gt; <span class="title">b</span><span class="params">(a.get())</span></span>;</span><br><span class="line"><span class="comment">// runtime error: double free</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> a = std::<span class="built_in">make_shared</span>&lt;T&gt;();</span><br><span class="line"><span class="function">std::shared_ptr&lt;T&gt; <span class="title">b</span><span class="params">(a)</span></span>;</span><br><span class="line">std::shared_ptr&lt;T&gt; c;</span><br><span class="line">c = b;</span><br><span class="line"><span class="comment">// Good</span></span><br></pre></td></tr></table></figure>
+
+<p>多线程下的问题：the reentrancy pitfall</p>
+<p>在函数执行期间，如果全局 <code>shared_ptr</code> 被重新赋值，可能导致原对象被销毁，而函数内部仍在使用该对象的引用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// global (static or heap), or aliased local</span></span><br><span class="line">... shared_ptr&lt;widget&gt; g_p ...</span><br><span class="line"><span class="comment">//g_p是一个全局的shared_ptr</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(widget&amp; w)</span> </span>&#123; <span class="built_in">g</span>(); <span class="built_in">use</span>(w); &#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">g</span><span class="params">()</span> </span>&#123;g_p = std::<span class="built_in">make_shared</span>&lt;widget&gt;(...); &#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">my_code</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">f</span>(*g_p); <span class="comment">// bad  这里g_p已经被g()更改</span></span><br><span class="line">    g_p-&gt;<span class="built_in">foo</span>(); <span class="comment">// bad</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//解决方案：&quot;Pin&quot; using unaliased local copy</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// global (static or heap), or aliased local</span></span><br><span class="line">... shared_ptr&lt;widget&gt; g_p ...</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(widget&amp; w)</span> </span>&#123; <span class="built_in">g</span>(); <span class="built_in">use</span>(w); &#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">g</span><span class="params">()</span> </span>&#123; g_p = std::<span class="built_in">make_shared</span>&lt;widget&gt;(...); &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">my_code</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> pin = g_p; <span class="comment">// 1 ++ for whole tree</span></span><br><span class="line">    <span class="comment">// pin 是g_p的拷贝，使引用次数+1</span></span><br><span class="line">    <span class="comment">//即使 g() 把 g_p 重新指向了其他对象，原来的对象因为 pin 还持有它，所以不会被销毁。w 引用的是 *pin，所以它始终有效。</span></span><br><span class="line">    <span class="built_in">f</span>(*pin); <span class="comment">// ok, *local</span></span><br><span class="line">    pin-&gt;<span class="built_in">foo</span>(); <span class="comment">// ok, local-&gt;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>“重入（reentrancy）”在这里指：在执行一个函数的过程中，又调用了另一个可能修改全局状态的函数，并且这个修改影响到了当前函数的上下文。</p>
+<h3 id="回顾：Rule-of-Zero"><a href="#回顾：Rule-of-Zero" class="headerlink" title="回顾：Rule of Zero"></a>回顾：Rule of Zero</h3><p>老生常谈了，之前Rule of Three也是一样的，作一个更新：</p>
+<ul>
+<li><code>std::string</code> 代为管理字符串</li>
+<li>STL 容器代为管理数据类型，如 <code>std::vector</code> 或者 <code>std::array</code> 代为管理数组</li>
+<li>智能指针代为管理动态内存</li>
+<li><code>std::fstream</code> 等代为管理文件读写</li>
+</ul>
+<h3 id="暂未讨论的话题"><a href="#暂未讨论的话题" class="headerlink" title="暂未讨论的话题"></a>暂未讨论的话题</h3><ul>
+<li><strong>线程安全</strong>: 在多线程环境下，尤其是 <code>shared_ptr</code>，需要保证线程安全。这个话题值得深入讨论，但由于我们没有涉及多线程的内容，暂时不展开讲解。</li>
+<li><strong>异常安全</strong>: 虽然我们还没有设计异常处理，但智能指针除了之前提到的各种优点外，还能提供较好的异常安全性。</li>
+<li><code>std::weak_ptr</code>: C++ 标准库中有几种智能指针，除了 <code>shared_ptr</code> 和 <code>unique_ptr</code> 之外，还有一个 <code>weak_ptr</code>。<code>weak_ptr</code> 是与 <code>shared_ptr</code> 共同使用的，它是 <code>shared_ptr</code> 的一个弱引用。所谓弱引用，就是即使 <code>weak_ptr</code> 存在，如果最后一个 <code>shared_ptr</code> 被销毁，对象仍然可以正常析构。<code>weak_ptr</code> 不影响对象的析构。<code>weak_ptr</code> 的一个常见用途是在实现 cache 时使用，大家有兴趣的话可以自行查阅相关资料。</li>
+<li>自定义删除器: <code>shared_ptr</code> 和 <code>unique_ptr</code> 都支持自定义删除器。默认情况下，对于非数组类型，删除器是 <code>delete</code>，对于数组类型，删除器是 <code>delete[]</code>。但在实际应用中，我们可能需要管理非普通指针，比如 FILE*，这时我们希望在析构时调用 <code>fclose</code> 而不是 <code>delete</code>。这种情况下，我们可以自定义删除器。</li>
+<li>继承关系中的智能指针: 在 C++ 中，子类的指针可以转换为基类的指针。同样，子类的智能指针也可以转换为基类的智能指针。这是对普通指针行为的一种模仿。如果大家有需要，可以进一步了解这方面的内容。</li>
+<li><code>shared_from_this</code></li>
+</ul>
+</article>
+<div class="article-footer slide-up">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap slide-up" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">Older</div><a href="/2026/08/30/oopnote8/">右键引用与移动语义</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer slide-up footnote"><hr><div class="text"><p>本站由 <a href="/">John Doe</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.38.0">Stellar 1.38.0</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right"><div class="widgets">
+
+
+
+<widget class="widget-wrapper slide-up toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="toc-text">智能指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA"><span class="toc-text">动机</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E6%8C%87%E5%90%91%E7%9A%84%E5%86%85%E5%AD%98%E4%BD%95%E6%97%B6%E9%87%8A%E6%94%BE"><span class="toc-text">指针指向的内存何时释放</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E6%8C%87%E5%90%91%E5%8D%95%E4%B8%AA%E5%AF%B9%E8%B1%A1%E8%BF%98%E6%98%AF%E6%95%B0%E7%BB%84"><span class="toc-text">指针指向单个对象还是数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E6%98%AF%E5%90%A6%E5%85%81%E8%AE%B8%E4%B8%BA%E7%A9%BA"><span class="toc-text">指针是否允许为空</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6-GC-garbage-collection"><span class="toc-text">垃圾回收 |GC(garbage collection)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#std-unique-ptr"><span class="toc-text">std::unique_ptr</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#conception"><span class="toc-text">conception</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="toc-text">实现思路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%91%98%E7%B1%BB%E5%9E%8B"><span class="toc-text">成员类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E4%B8%8E%E6%9E%90%E6%9E%84"><span class="toc-text">构造与析构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%92%8C%E7%A7%BB%E5%8A%A8%E8%B5%8B%E5%80%BC"><span class="toc-text">移动构造和移动赋值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">重载运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="toc-text">其他成员函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8make-unique%E6%9D%A5%E5%88%9B%E5%BB%BA-unique-ptr%E5%AF%B9%E8%B1%A1"><span class="toc-text">使用make_unique来创建 unique_ptr对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E7%89%88%E6%9C%AC%EF%BC%9Aunique-ptr"><span class="toc-text">数组版本：unique_ptr&lt;T[]&gt;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E5%AE%9E%E4%BE%8B"><span class="toc-text">智能指针实例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%80%E6%9C%89%E6%9D%83%E8%BD%AC%E7%A7%BB"><span class="toc-text">所有权转移</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%B3%95%E5%B0%8F%E7%BB%93%EF%BC%9A%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E9%9C%80%E8%A6%81%E8%BD%AC%E7%A7%BB%E6%89%80%E6%9C%89%E6%9D%83-%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8D%E9%9C%80%E8%A6%81%EF%BC%9F"><span class="toc-text">用法小结：什么情况需要转移所有权,什么情况不需要？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88%E5%86%85%E5%AD%98%E4%B8%8E%E5%A0%86%E5%86%85%E5%AD%98"><span class="toc-text">栈内存与堆内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%B7%E9%98%B1"><span class="toc-text">陷阱</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#unique-ptr-%E5%9C%A8%E5%AE%B9%E5%99%A8%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="toc-text">unique_ptr 在容器中使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#std-shared-ptr"><span class="toc-text">std::shared_ptr</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#concept"><span class="toc-text">concept</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%EF%BC%88interface-%EF%BC%89"><span class="toc-text">接口（interface?）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#std-make-shared"><span class="toc-text">std::make_shared</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shared-ptr%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E5%92%8C%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">shared_ptr作为函数参数和返回值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shared-ptr%E7%9A%84%E5%B8%B8%E8%A7%81%E9%99%B7%E9%98%B1"><span class="toc-text">shared_ptr的常见陷阱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%A1%BE%EF%BC%9ARule-of-Zero"><span class="toc-text">回顾：Rule of Zero</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9A%82%E6%9C%AA%E8%AE%A8%E8%AE%BA%E7%9A%84%E8%AF%9D%E9%A2%98"><span class="toc-text">暂未讨论的话题</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  window.canonical["param"] = {"permalink":"http://example.com/2026/08/30/oopnote9/","checklink":"/js/plugins/video.js"};
+  // Fix: Ensure page is at the correct top position on data load
+  if (history.scrollRestoration) {
+    history.scrollRestoration = 'auto';
+  }
+  (function() {
+    const scrollHandler = () => {
+      const wikiCover = document.querySelector('#l_cover .l_cover.wiki');
+      const startEl = document.getElementById('start');
+      // 存在有效锚点时，等待布局稳定后滚动到目标
+      // （浏览器原生锚点滚动发生在布局完成前，长文章的懒加载图片/异步组件会把目标顶偏）
+      const hash = window.location.hash;
+      if (hash.length > 1) {
+        let anchorId = hash.slice(1);
+        try {
+          anchorId = decodeURIComponent(anchorId);
+        } catch (e) {
+          // 片段含非法编码时按原样查找
+        }
+        const anchor = document.getElementById(anchorId);
+        if (anchor) {
+          // #start 锚点贴顶，不预留 offset；其余锚点与 TOC 点击滚动保持一致
+          const offset = anchorId === 'start' ? 0 : 32;
+          const targetY = () => anchor.getBoundingClientRect().top + window.scrollY - offset;
+          let timer = null;
+          let lastY = null;
+          let quiet = 0;
+          let attempts = 0;
+          // 记录最近一次资源加载完成时间，判断异步数据/图片是否仍在改变布局
+          let lastResourceTime = performance.now();
+          let observer = null;
+          try {
+            observer = new PerformanceObserver(function (list) {
+              lastResourceTime = performance.now();
+            });
+            observer.observe({ entryTypes: ['resource'] });
+          } catch (e) {}
+          // 统计进行中的 fetch/XHR 请求，异步组件（timeline 等）未完成前不判定布局稳定
+          let pendingRequests = 0;
+          const trackRequest = (fn) => {
+            pendingRequests++;
+            try {
+              const result = fn();
+              if (result && typeof result.finally === 'function') {
+                result.finally(function () {
+                  pendingRequests = Math.max(0, pendingRequests - 1);
+                });
+              } else {
+                pendingRequests = Math.max(0, pendingRequests - 1);
+              }
+              return result;
+            } catch (e) {
+              pendingRequests = Math.max(0, pendingRequests - 1);
+              throw e;
+            }
+          };
+          if (typeof window.fetch === 'function') {
+            const origFetch = window.fetch.bind(window);
+            window.fetch = function () {
+              const args = arguments;
+              return trackRequest(function () {
+                return origFetch.apply(window, args);
+              });
+            };
+          }
+          if (window.XMLHttpRequest) {
+            const origOpen = window.XMLHttpRequest.prototype.open;
+            const origSend = window.XMLHttpRequest.prototype.send;
+            window.XMLHttpRequest.prototype.open = function () {
+              this.__anchorTracked = true;
+              return origOpen.apply(this, arguments);
+            };
+            window.XMLHttpRequest.prototype.send = function () {
+              if (this.__anchorTracked) {
+                pendingRequests++;
+                const done = () => {
+                  if (this.__anchorTracked) {
+                    this.__anchorTracked = false;
+                    pendingRequests = Math.max(0, pendingRequests - 1);
+                  }
+                };
+                this.addEventListener('loadend', done);
+              }
+              return origSend.apply(this, arguments);
+            };
+          }
+          const cancel = () => {
+            if (timer !== null) {
+              clearInterval(timer);
+              timer = null;
+            }
+            if (observer !== null) {
+              try {
+                observer.disconnect();
+              } catch (e) {}
+            }
+          };
+          const adjust = () => {
+            const y = targetY();
+            const atTarget = Math.abs(window.scrollY - y) <= 2;
+            if (!atTarget || lastY === null || Math.abs(y - lastY) > 2) {
+              window.scrollTo({ top: y, behavior: 'instant' });
+              lastY = y;
+              quiet = 0;
+            } else {
+              quiet++;
+            }
+            attempts++;
+            const resourceQuiet = performance.now() - lastResourceTime > 3000;
+            // 位置连续 1.8 秒无变化、无进行中的请求且最近 3 秒无资源加载才视为稳定；最长等待 30 秒
+            if ((quiet >= 3 && pendingRequests === 0 && resourceQuiet) || attempts >= 50) {
+              cancel();
+            }
+          };
+          requestAnimationFrame(() => {
+            // 锚点链接打开时直接定位，不做动画；用户主动点击（如 TOC）仍走平滑滚动
+            window.scrollTo({ top: targetY(), behavior: 'instant' });
+            timer = setInterval(adjust, 600);
+          });
+          // 用户主动滚动时停止自动校正
+          window.addEventListener('wheel', cancel, { passive: true });
+          window.addEventListener('touchstart', cancel, { passive: true });
+          window.addEventListener('mousedown', cancel, { passive: true });
+          window.addEventListener('keydown', cancel, { passive: true });
+          return;
+        }
+      }
+      if (wikiCover && startEl) {
+        window.scrollTo(0, startEl.offsetTop);
+      } else {
+        window.scrollTo(0, 0);
+      }
+    };
+    if (document.readyState !== 'loading') scrollHandler();
+    else document.addEventListener('DOMContentLoaded', scrollHandler);
+  })();
+  const ctx = {
+    date_suffix: {
+      just: `Just`,
+      min: `minutes ago`,
+      hour: `hours ago`,
+      day: `days ago`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+    data_cache: {"enable":true,"default_ttl":3600,"ttl":{"giscus":600,"waline":600,"artalk":600,"memos":600,"memos-user":86400,"sites":86400,"friends":86400,"friends_and_posts":86400,"siteinfo":86400},"max_entries":200},
+  };
+  const deps = {
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js`
+  }
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      // 倒序遍历避免 splice 后的索引问题
+      for (let index = this.list.length - 1; index >= 0; index--) {
+        const e = this.list[index];
+        if (e.name === name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 已加载样式缓存
+    _loadedStyles: new Set(),
+
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      // 如果样式已加载，直接返回 null
+      if (utils._loadedStyles.has(href)) {
+        return null;
+      }
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      // 标记样式为已加载 (在创建元素后立即标记，防止重复创建)
+      utils._loadedStyles.add(href);
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 已加载脚本缓存
+    _loadedScripts: new Set(),
+
+    // 已加载元素缓存 (使用 WeakSet 追踪元素实例,避免重复加载)
+    _loadedElements: new WeakSet(),
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      // 如果脚本已加载，直接返回
+      if (utils._loadedScripts.has(src)) {
+        resolve();
+        return;
+      }
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        utils._loadedScripts.add(src);
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // 原生 DOM 工具：querySelector / querySelectorAll 简写
+    qs: (sel, ctx) => (ctx || document).querySelector(sel),
+    qsa: (sel, ctx) => Array.prototype.slice.call((ctx || document).querySelectorAll(sel)),
+
+    // 原生 DOM 封装：常用 DOM 操作方法子集（find/append/class/attr/事件等）
+    dom: (selector, ctx) => {
+      var els = [];
+      if (typeof selector === 'string') {
+        els = utils.qsa(selector, ctx);
+      } else if (selector && selector.nodeType === 1) {
+        els = [selector];
+      } else if (selector && typeof selector.length === 'number') {
+        els = Array.prototype.slice.call(selector);
+      }
+      var api = {
+        length: els.length,
+        each: function (fn) {
+          els.forEach(function (el, i) {
+            fn.call(el, i, el);
+          });
+          return api;
+        },
+        find: function (sel) {
+          var result = [];
+          els.forEach(function (el) {
+            Array.prototype.push.apply(result, el.querySelectorAll(sel));
+          });
+          return utils.dom(result);
+        },
+        append: function (content) {
+          els.forEach(function (el) {
+            if (typeof content === 'string') {
+              el.insertAdjacentHTML('beforeend', content);
+            } else if (content && content.nodeType === 1) {
+              el.appendChild(content);
+            } else if (content && typeof content.length === 'number') {
+              Array.prototype.forEach.call(content, function (child) {
+                if (child && child.nodeType === 1) el.appendChild(child);
+              });
+            }
+          });
+          return api;
+        },
+        remove: function () {
+          els.forEach(function (el) {
+            el.remove();
+          });
+        },
+        addClass: function (cls) {
+          els.forEach(function (el) {
+            cls.trim().split(/\s+/).forEach(function (c) {
+              if (c) el.classList.add(c);
+            });
+          });
+          return api;
+        },
+        removeClass: function (cls) {
+          els.forEach(function (el) {
+            cls.trim().split(/\s+/).forEach(function (c) {
+              if (c) el.classList.remove(c);
+            });
+          });
+          return api;
+        },
+        toggleClass: function (cls, force) {
+          els.forEach(function (el) {
+            cls.trim().split(/\s+/).forEach(function (c) {
+              if (c) el.classList.toggle(c, force);
+            });
+          });
+          return api;
+        },
+        attr: function (name, value) {
+          if (value === undefined) {
+            return els[0] ? els[0].getAttribute(name) : undefined;
+          }
+          els.forEach(function (el) {
+            el.setAttribute(name, value);
+          });
+          return api;
+        },
+        data: function (name) {
+          return els[0] ? els[0].getAttribute('data-' + name) : undefined;
+        },
+        text: function (value) {
+          if (value === undefined) {
+            return els[0] ? els[0].textContent : undefined;
+          }
+          els.forEach(function (el) {
+            el.textContent = value;
+          });
+          return api;
+        },
+        html: function (content) {
+          if (content === undefined) {
+            return els[0] ? els[0].innerHTML : undefined;
+          }
+          els.forEach(function (el) {
+            if (typeof content !== 'string' && content && typeof content.length === 'number' && content[0] && content[0].nodeType === 1) {
+              var frag = document.createDocumentFragment();
+              Array.prototype.forEach.call(content, function (child) {
+                frag.appendChild(child);
+              });
+              el.replaceChildren(frag);
+            } else {
+              el.innerHTML = content;
+            }
+          });
+          return api;
+        },
+        val: function (value) {
+          if (value === undefined) {
+            return els[0] ? els[0].value : undefined;
+          }
+          els.forEach(function (el) {
+            el.value = value;
+          });
+          return api;
+        },
+        offset: function () {
+          var el = els[0];
+          if (!el) return { top: 0, left: 0 };
+          var rect = el.getBoundingClientRect();
+          return { top: rect.top + window.scrollY, left: rect.left + window.scrollX };
+        },
+        on: function (event, cb) {
+          els.forEach(function (el) {
+            el.addEventListener(event, cb);
+          });
+          return api;
+        },
+        click: function (cb) { return api.on('click', cb); },
+        focus: function (cb) { return api.on('focus', cb); },
+        keydown: function (cb) { return api.on('keydown', cb); },
+        empty: function () {
+          els.forEach(function (el) {
+            el.replaceChildren();
+          });
+          return api;
+        }
+      };
+      els.forEach(function (el, i) {
+        api[i] = el;
+      });
+      return api;
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        if (el.querySelector('.loading-wrap') === null) {
+          el.insertAdjacentHTML('beforeend', '<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+        }
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        var wrap = el.querySelector('.loading-wrap');
+        if (wrap) wrap.remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        var wrap = el.querySelector('.loading-wrap');
+        if (wrap) {
+          var svg = wrap.querySelector('svg');
+          if (svg) svg.remove();
+          wrap.insertAdjacentHTML('beforeend', '<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+          wrap.classList.add('error');
+        }
+      }
+    },
+    /********************** data cache ********************************/
+    // 动态数据本地缓存：TTL 未过期直接命中；过期后先显示缓存再后台刷新（stale-while-revalidate）
+    _cacheEnabled: true,
+    _cacheMaxEntryBytes: 200 * 1024,
+    // 同 URL 并发请求去重：页面内多个组件请求同一接口时共享一次 fetch
+    _pendingRequests: {},
+    _fetchShared: (url, options) => {
+      const key = (options && options.method || 'GET') + ' ' + url;
+      if (utils._pendingRequests[key]) {
+        return utils._pendingRequests[key].then(resp => resp.clone());
+      }
+      const promise = fetch(url, options).then(resp => {
+        if (!resp.ok) throw new Error('响应失败');
+        return resp;
+      }).finally(() => {
+        delete utils._pendingRequests[key];
+      });
+      utils._pendingRequests[key] = promise;
+      // 每个调用方各自 clone，避免 Response body 被消费后其他调用方取不到数据
+      return promise.then(resp => resp.clone());
+    },
+    // 延迟执行：缓存写入等非关键操作让出主线程
+    _defer: (fn) => {
+      if (window.requestIdleCallback) {
+        window.requestIdleCallback(fn, { timeout: 3000 });
+      } else {
+        setTimeout(fn, 0);
+      }
+    },
+    cache: {
+      prefix: 'Stellar.data_cache.v1.',
+      enabled: () => !!def.data_cache?.enable && utils._cacheEnabled,
+      serviceId: (el, options) => {
+        if (options && options.service) return options.service;
+        if (el) {
+          const match = String(el.className || '').match(/\bds-([\w-]+)\b/);
+          if (match) return match[1];
+        }
+        return null;
+      },
+      ttl: (el, options) => {
+        const conf = def.data_cache || {};
+        const id = utils.cache.serviceId(el, options);
+        const value = id && conf.ttl && conf.ttl[id] != null ? conf.ttl[id] : conf.default_ttl;
+        return typeof value === 'number' && value > 0 ? value : 0;
+      },
+      shouldCache: (url, options) => {
+        if (!utils.cache.enabled()) return false;
+        if (options && (options.cache === false || options.cache === 'no-store')) return false;
+        if (options && options.method && options.method !== 'GET') return false;
+        // 带时间戳缓存破坏参数的请求不缓存（如 mdrender 的 ?t=）
+        if (/[?&]t=\d{10,}/.test(url)) return false;
+        return true;
+      },
+      get: (url) => {
+        try {
+          const raw = localStorage.getItem(utils.cache.prefix + url);
+          if (!raw) return null;
+          const entry = JSON.parse(raw);
+          if (!entry || typeof entry.text !== 'string' || typeof entry.ts !== 'number') return null;
+          return entry;
+        } catch (e) {
+          console.warn('[cache] 读取失败:', url, e);
+          return null;
+        }
+      },
+      set: (url, text, contentType, ttl) => {
+        if (!(ttl > 0)) return;
+        if (text.length > utils._cacheMaxEntryBytes) return;
+        const entry = JSON.stringify({
+          text: text,
+          contentType: contentType || 'application/json',
+          ts: Date.now(),
+          ttl: ttl
+        });
+        const trySet = () => {
+          try {
+            localStorage.setItem(utils.cache.prefix + url, entry);
+            utils.cache.trim();
+            return true;
+          } catch (e) {
+            return false;
+          }
+        };
+        if (!trySet()) {
+          // 配额不足时淘汰最旧条目后重试一次，仍失败则本会话禁用缓存
+          utils.cache.evictOldest(url);
+          if (!trySet()) {
+            console.warn('[cache] 写入失败，本会话禁用缓存:', url);
+            utils._cacheEnabled = false;
+          }
+        }
+      },
+      trim: () => {
+        try {
+          const max = (def.data_cache && def.data_cache.max_entries) || 200;
+          const keys = [];
+          for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.indexOf(utils.cache.prefix) === 0) keys.push(key);
+          }
+          if (keys.length <= max) return;
+          const sorted = keys.map((key) => {
+            let ts = 0;
+            try {
+              const entry = JSON.parse(localStorage.getItem(key) || 'null');
+              if (entry && typeof entry.ts === 'number') ts = entry.ts;
+            } catch (e) {}
+            return { key, ts };
+          }).sort((a, b) => a.ts - b.ts);
+          for (let i = 0; i < sorted.length - max; i++) {
+            localStorage.removeItem(sorted[i].key);
+          }
+        } catch (e) {
+          console.warn('[cache] 清理失败:', e);
+        }
+      },
+      evictOldest: (exceptUrl) => {
+        try {
+          let oldestKey = null;
+          let oldestTs = Infinity;
+          const exceptKey = utils.cache.prefix + exceptUrl;
+          for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (!key || key.indexOf(utils.cache.prefix) !== 0 || key === exceptKey) continue;
+            let ts = 0;
+            try {
+              const entry = JSON.parse(localStorage.getItem(key) || 'null');
+              if (entry && typeof entry.ts === 'number') ts = entry.ts;
+            } catch (e) {}
+            if (ts < oldestTs) {
+              oldestTs = ts;
+              oldestKey = key;
+            }
+          }
+          if (oldestKey) localStorage.removeItem(oldestKey);
+        } catch (e) {}
+      },
+      isFresh: (entry) => {
+        if (!entry || typeof entry.ts !== 'number' || typeof entry.ttl !== 'number') return false;
+        if (!(entry.ttl > 0)) return false;
+        return Date.now() - entry.ts < entry.ttl * 1000;
+      },
+      // 用缓存文本重建 Response，兼容回调中的 resp.json() / resp.text()
+      toResponse: (entry) => new Response(entry.text, {
+        status: 200,
+        statusText: 'OK',
+        headers: { 'Content-Type': entry.contentType }
+      })
+    },
+    request: (el, url, callback, onFailure, options) => {
+      // 检查元素实例是否已加载 (而不是检查属性)
+      if (el && utils._loadedElements.has(el)) {
+        return;
+      }
+      const maxRetry = 3;
+      let retryCount = 0;
+      const ttl = utils.cache.ttl(el, options);
+      const cacheable = utils.cache.shouldCache(url, options) && ttl > 0;
+      const cached = cacheable ? utils.cache.get(url) : null;
+      // 缓存渲染前的初始结构，后台刷新渲染前恢复，避免重复渲染
+      let initialHTML = null;
+      // 缓存渲染完成后（或超时兜底）再启动后台刷新，避免异步渲染未结束就清空重绘
+      let cacheRenderDone = null;
+
+      if (cached) {
+        if (el) {
+          // 已有缓存时不显示加载动画
+          utils.onLoadSuccess?.(el);
+          initialHTML = el.innerHTML;
+        }
+        try {
+          cacheRenderDone = Promise.resolve(callback(utils.cache.toResponse(cached))).catch(e => {
+            console.warn('[request] 缓存渲染失败:', url, e);
+          });
+        } catch (e) {
+          console.warn('[request] 缓存渲染失败:', url, e);
+        }
+        // 缓存未过期：直接完成，不发请求
+        if (utils.cache.isFresh(cached)) {
+          if (el) utils._loadedElements.add(el);
+          return Promise.resolve(cached.text);
+        }
+      } else {
+        utils.onLoading?.(el);
+      }
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              if (cached) {
+                // 已有缓存渲染，保留缓存内容，不显示失败
+                resolve(cached.text);
+              } else {
+                utils.onLoadFailure?.(el);
+                onFailure?.();
+                reject('请求超时');
+              }
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          utils._fetchShared(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            // 标记元素实例为已加载
+            if (el) utils._loadedElements.add(el);
+            // 写入缓存（克隆响应，避免影响回调读取；延迟执行，避免阻塞渲染）
+            if (cacheable && data.ok) {
+              utils._defer(() => {
+                data.clone().text().then(text => {
+                  utils.cache.set(url, text, data.headers.get('Content-Type') || 'application/json', ttl);
+                }).catch(() => {});
+              });
+            }
+            // 后台刷新渲染前恢复初始结构，避免缓存渲染的内容重复
+            if (el && initialHTML !== null) {
+              el.innerHTML = initialHTML;
+            }
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              if (cached) {
+                resolve(cached.text);
+              } else {
+                utils.onLoadFailure?.(el);
+                onFailure?.();
+                reject(err);
+              }
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        if (cacheRenderDone) {
+          Promise.race([
+            cacheRenderDone,
+            new Promise(resolve => setTimeout(resolve, 5000))
+          ]).then(load);
+        } else {
+          load();
+        }
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      const ttl = utils.cache.ttl(null, options);
+      const cacheable = utils.cache.shouldCache(url, options) && ttl > 0;
+      const cached = cacheable ? utils.cache.get(url) : null;
+
+      if (cached && utils.cache.isFresh(cached)) {
+        return Promise.resolve(utils.cache.toResponse(cached));
+      }
+
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+        // 与 request 保持一致：最终失败时回退 stale 缓存，避免闪失败态
+        const fallback = () => {
+          if (cached) {
+            resolve(utils.cache.toResponse(cached));
+          } else {
+            reject('timeout');
+          }
+        };
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) fallback();
+            else tryRequest();
+          }, timeout);
+
+          utils._fetchShared(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (timedOut) return;
+              if (cacheable) {
+                utils._defer(() => {
+                  resp.clone().text().then(text => {
+                    utils.cache.set(url, text, resp.headers.get('Content-Type') || 'application/json', ttl);
+                  }).catch(() => {});
+                });
+              }
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (timedOut) return;
+              if (++retryCount > maxRetry) {
+                if (cached) {
+                  resolve(utils.cache.toResponse(cached));
+                } else {
+                  reject(err);
+                }
+              } else {
+                setTimeout(tryRequest, 500);
+              }
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+
+    // 插件初始化管理器 - 统一处理 DOMContentLoaded 事件
+    _pluginInitializers: [],
+    _pluginCleanups: new Map(), // 存储每个插件的清理函数
+    
+    initPlugin: (initFn, name, options = {}) => {
+      if (!initFn || typeof initFn !== 'function') return;
+      
+      // 避免重复注册
+      const pluginName = name || initFn.name;
+      if (utils._pluginInitializers.some(p => p.name === pluginName)) return;
+      
+      // 包装初始化函数，添加防重复执行的保护
+      const wrappedInit = () => {
+        try {
+          // 在执行前先清理旧的资源
+          if (utils._pluginCleanups.has(pluginName)) {
+            const cleanup = utils._pluginCleanups.get(pluginName);
+            if (typeof cleanup === 'function') {
+              cleanup();
+            }
+          }
+          
+          // 执行初始化，可能返回清理函数
+          const cleanup = initFn();
+          
+          // 如果初始化函数返回了清理函数，保存它
+          if (typeof cleanup === 'function') {
+            utils._pluginCleanups.set(pluginName, cleanup);
+          }
+        } catch (error) {
+          console.error(`[Plugin ${pluginName}] 初始化失败:`, error);
+        }
+      };
+      
+      utils._pluginInitializers.push({ 
+        fn: wrappedInit, 
+        name: pluginName,
+        options: options 
+      });
+      
+      // 如果 DOM 已经加载完成，立即执行
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        wrappedInit();
+      } else {
+        // 否则等待 DOMContentLoaded
+        window.addEventListener('DOMContentLoaded', wrappedInit, { once: true });
+      }
+    },
+
+    // 清理所有插件资源
+    cleanupPlugins: () => {
+      utils._pluginCleanups.forEach((cleanup, name) => {
+        try {
+          cleanup();
+        } catch (error) {
+          console.error(`[Plugin ${name}] 清理失败:`, error);
+        }
+      });
+      utils._pluginCleanups.clear();
+    },
+    
+    // 清理所有资源（用于页面卸载或重置）
+    cleanupAll: () => {
+      utils.cleanupPlugins();
+    },
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script>
+  // 先声明配置与初始化监听，再异步加载库：
+  // 保证库执行时 lazyLoadOptions 已就绪，避免 async 脚本抢先执行导致自初始化失败
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      // {% image %} 没有 .lazy-box 包裹，回退到父元素查找加载图标
+      const wrapper = el.closest('.lazy-box') || el.parentElement;
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // 监听初始化事件，获取 LazyLoad 实例
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  // 兜底：动态插入的 .lazy 元素（如站点自定义脚本在 update() 之后追加的图片）
+  // 不会被 vanilla-lazyload 自动扫描，未注册的 img.lazy 会被 CSS opacity:0 永久隐藏。
+  // MutationObserver 检测到新增 .lazy 元素后自动调用 update() 重新注册。
+  if (window.MutationObserver) {
+    window.lazyMutationObserver = new MutationObserver((mutations) => {
+      if (window.lazyMutationObserver._pending) return;
+      const hasLazy = mutations.some((m) =>
+        Array.prototype.some.call(m.addedNodes, (node) =>
+          node.nodeType === 1 &&
+          (node.matches?.('.lazy') || !!node.querySelector?.('.lazy'))
+        )
+      );
+      if (!hasLazy) return;
+      window.lazyMutationObserver._pending = requestAnimationFrame(() => {
+        window.lazyMutationObserver._pending = null;
+        window.lazyLoadInstance?.update();
+      });
+    });
+    window.lazyMutationObserver.observe(document.documentElement, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+</script>
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+
+
+<!-- required -->
+<script src="/js/main.js?v=1.38.0" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `Switched to Light Mode`,
+      dark: `Switched to Dark Mode`,
+      auto: `Switched to Auto Mode`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- contour background -->
+<script src="https://cdn.jsdelivr.net/npm/simplex-noise@2.4.0/simplex-noise.min.js" defer></script>
+<script src="/js/plugins/contour-bg.js" defer></script>
+
+<!-- day/night toggle -->
+<script type="text/javascript">
+  const toggleDayNight = () => {
+    // 只在 light 和 dark 之间切换（不经过 auto）
+    const current = document.documentElement.getAttribute('data-theme')
+    const newTheme = current === 'dark' ? 'light' : 'dark'
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme
+    utils.dark.method.toggle.start()
+  }
+</script>
+
+<!-- optional -->
+
+
+
+<script defer>
+  const initServices = () => {
+    // 用于存储需要清理的资源
+    let timers = [];
+    
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"},"rss":{"js":"/js/services/rss.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        const cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(cardlinks);
+          });
+        }
+      } else if (id == 'ghinfo') {
+        const els = document.querySelectorAll('.ds-ghinfo');
+        if (els.length > 0) {
+          utils.js(js, { defer: true });
+        }
+      } else if (id == 'voice') {
+        const voiceAudios = document.querySelectorAll('.voice>audio');
+        if (voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        const videos = document.querySelectorAll('.video>video');
+        if (videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        const files = document.querySelectorAll('.chat-file');
+        if (files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          if (id == 'timeline' || id == 'memos' || id == 'marked' || id == 'mdrender') {
+            utils.js(deps.marked).then(function () {
+              utils.js(js, { defer: true });
+            });
+          } else {
+            utils.js(js, { defer: true });
+          }
+        }
+      }
+    }
+
+    // search
+    if (ctx.search && typeof searchFunc === 'function') {
+      const inputArea = document.querySelector("input#search-input");
+      if (inputArea && !inputArea._searchInitialized) {
+        const path = ctx.search.path.startsWith('/') ? ctx.root + ctx.search.path.substring(1) : ctx.root + ctx.search.path;
+        const filter = inputArea.getAttribute('data-filter') || '';
+        searchFunc(path, filter, 'search-wrapper', 'search-input', 'search-result');
+        // 标记为已初始化，防止重复绑定
+        inputArea._searchInitialized = true;
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+    let firstAdjustInterval = null;
+    let mainInterval = null;
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      const date = new Date();
+      const sec = date.getSeconds();
+      firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+      timers.push(firstAdjustInterval);
+
+      function firstAdjustTime() {
+        NowTime();
+        if (firstAdjustInterval) {
+          clearInterval(firstAdjustInterval);
+          firstAdjustInterval = null;
+        }
+        mainInterval = setInterval(NowTime, 1000 * 60);
+        timers.push(mainInterval);
+      }
+
+      function NowTime() {
+        for (let i = 0; i < phoneTimes.length; ++i) {
+          const timeSpan = phoneTimes[i];
+          const date = new Date();
+          const hour = date.getHours();
+          const min = date.getMinutes();
+          timeSpan.innerHTML = check(hour) + ":" + check(min);
+        }
+      };
+
+      function check(val) {
+        if (val < 10) {
+          return ("0" + val);
+        }
+        return (val);
+      }
+    }
+
+    // chat quote - 存储事件监听器以便清理
+    const quoteClickHandlers = new Map();
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      const handler = function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      };
+      quote.addEventListener('click', handler);
+      quoteClickHandlers.set(quote, handler); // 保存处理器引用
+    });
+
+    // 返回清理函数，用于清理定时器和观察器
+    return () => {
+      // 清理所有定时器（包括可能未完成的 firstAdjustInterval）
+      timers.forEach(timer => {
+        if (timer) clearInterval(timer);
+      });
+      timers = [];
+      if (firstAdjustInterval) {
+        clearInterval(firstAdjustInterval);
+        firstAdjustInterval = null;
+      }
+      if (mainInterval) {
+        clearInterval(mainInterval);
+        mainInterval = null;
+      }
+      
+      // 断开观察器
+      if (chat_quote_obverser) {
+        chat_quote_obverser.disconnect();
+      }
+      
+      // 移除所有 click 事件监听器
+      quoteClickHandlers.forEach((handler, quote) => {
+        quote.removeEventListener('click', handler);
+      });
+      quoteClickHandlers.clear();
+    };
+  };
+
+  utils.initPlugin(initServices, 'services');
+</script>
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    mode: `auto`,
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  // auto=按需：页面存在可弹窗图片才加载；global=全局：所有页面加载
+  const isGlobal = ctx.fancybox.mode === 'global';
+  // 评论区图片（artalk/twikoo/waline）显示较小，自动支持放大
+  var selector = '[data-fancybox]:not(.error), .with-fancybox img:not([atk-emoticon]):not([class*="emo"])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = isGlobal;
+  if (!needFancybox) {
+    needFancybox = document.querySelectorAll(selector).length !== 0;
+    if (!needFancybox) {
+      // 图片型评论系统容器：评论区图片小图需要 fancybox
+      const withFancybox = document.getElementsByClassName('with-fancybox');
+      if (withFancybox != undefined && withFancybox.length > 0) {
+        needFancybox = true;
+      }
+    }
+    if (!needFancybox) {
+      // 动态数据服务：memos 渲染的图片需要 fancybox
+      const memos = document.getElementsByClassName('ds-memos');
+      if (memos != undefined && memos.length > 0) {
+        needFancybox = true;
+      }
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      if (isGlobal) {
+        // 全局模式：正文所有非内联图片均可弹窗
+        selector += ', .md-text img:not(.inline):not([atk-emoticon])';
+      }
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  utils.initPlugin(() => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  }, 'swiper');
+</script>
+<script>
+  utils.initPlugin(() => {
+    const els = Array.prototype.slice.call(document.querySelectorAll('.slide-up'));
+    if (els.length === 0) return;
+
+    // 吸顶/固定定位容器内的元素始终在视口内（或由容器控制显隐），
+    // 但 ScrollReveal 按文档坐标判断可见性，会误判这类元素为不可见，
+    // 导致带锚点/恢复滚动位置打开页面时组件一直不显示。
+    // 解决方式：以最近的吸顶/固定祖先作为该组元素的容器，
+    // 使可见性判断恒成立，入场动画保留且不再依赖主文档滚动。
+    const findPinnedContainer = (el) => {
+      let node = el;
+      while (node && node.nodeType === 1) {
+        const pos = window.getComputedStyle(node).position;
+        if (pos === 'sticky' || pos === 'fixed') return node;
+        node = node.parentElement;
+      }
+      return null;
+    };
+
+    // 最近的滚动容器（overflow-y: auto/scroll）
+    // 吸顶容器内可能存在内部滚动容器（如侧栏 .widgets），
+    // 若直接用吸顶容器做 reveal 容器，折叠区下方的元素永远不会进入视口，导致一直不显示。
+    const findScrollContainer = (el) => {
+      let node = el.parentElement;
+      while (node && node.nodeType === 1) {
+        const oy = window.getComputedStyle(node).overflowY;
+        if (oy === 'auto' || oy === 'scroll') return node;
+        node = node.parentElement;
+      }
+      return null;
+    };
+
+    const pinnedGroups = new Map(); // 容器 -> 元素列表
+    const targets = [];
+    els.forEach((el) => {
+      const pinned = findPinnedContainer(el);
+      if (pinned) {
+        // 优先使用最近的滚动容器，其次才用吸顶容器
+        const container = findScrollContainer(el) || pinned;
+        const group = pinnedGroups.get(container) || [];
+        group.push(el);
+        pinnedGroups.set(container, group);
+      } else {
+        targets.push(el);
+      }
+    });
+    if (pinnedGroups.size === 0 && targets.length === 0) return;
+
+    // 加载/初始化失败时兜底显示内容，避免整页空白
+    let fallbackApplied = false;
+    const revealFallback = () => {
+      if (fallbackApplied) return;
+      fallbackApplied = true;
+      document.documentElement.classList.add('sr-fallback');
+    };
+
+    const slideUp = {
+      distance: `8px`,
+      duration: `1000`,
+      interval: `100`,
+      scale: `1`,
+      opacity: 0,
+      easing: "ease-out"
+    };
+
+    // 看门狗：CDN 长时间无响应时强制显示内容
+    const watchdog = setTimeout(() => revealFallback(), 3000);
+
+    utils.js(`https://gcore.jsdelivr.net/npm/scrollreveal@4.0/dist/scrollreveal.min.js`, { defer: true })
+      .then(() => {
+        if (fallbackApplied) return;
+        if (typeof ScrollReveal !== 'function') {
+          revealFallback();
+          return;
+        }
+        try {
+          const sr = ScrollReveal();
+          if (targets.length > 0) {
+            sr.reveal(targets, { ...slideUp });
+          }
+          pinnedGroups.forEach((group, container) => {
+            sr.reveal(group, { ...slideUp, container: container });
+          });
+          clearTimeout(watchdog);
+        } catch (err) {
+          console.error('[Plugin scrollreveal] 初始化失败:', err);
+          revealFallback();
+        }
+      })
+      .catch((err) => {
+        console.error('[Plugin scrollreveal] 加载失败:', err);
+        revealFallback();
+      });
+  }, 'scrollreveal');
+</script>
+
+<script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script>
+  utils.initPlugin(() => {
+    const codeElements = document.querySelectorAll('.code');
+    if (codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js', { defer: true }).then(() => {
+        if (typeof createCopyButtons === 'function') {
+          createCopyButtons(codeElements);
+        }
+      });
+    }
+  }, 'copycode');
+</script>
+
+
+<!-- contour background -->
+<script src="https://cdn.jsdelivr.net/npm/simplex-noise@2.4.0/simplex-noise.min.js" defer></script>
+<script src="/js/plugins/contour-bg.js" defer></script>
+
+<!-- inject -->
+
+</div></body></html>
