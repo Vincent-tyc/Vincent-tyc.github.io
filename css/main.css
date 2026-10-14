@@ -33,9 +33,6 @@
 :root {
   --gap-max: calc(var(--gap-margin) + var(--gap-padding));
 }
-body {
-  background: transparent;
-}
 #background-canvas {
   position: fixed;
   top: 0;
